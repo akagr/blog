@@ -1,7 +1,7 @@
 ---
-toc: true
+toc: false
 layout: post
-description:
+description: Learn how to create a jspm package from scratch
 categories: []
 title: How to write a JSPM package
 ---
@@ -86,4 +86,3 @@ Here's the finished thing: [akagr/stripe-jspm](https://github.com/akagr/stripe-j
 This package has some room for improvements. For example, we can probably remove `traceur` as a dev dependency since we're not really using it in this package. And since it's written in ES5 and earlier stuff, we're not going to need it either.
 
 This was my first time writing a package for jspm and I liked how I was able to do that and import it within a few minutes. Any suggestions for improvements to package or this post will be much appreciated. Feel free to shoot comments over at [reddit](https://www.reddit.com/r/javascript/comments/41iuaq/how_to_write_a_jspm_package/).
-

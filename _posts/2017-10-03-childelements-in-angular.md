@@ -1,7 +1,7 @@
 ---
-toc: true
+toc: false
 layout: post
-description:
+description: How to access child elements in angular the easy way
 categories: []
 title: Accessing child elements in Angular / Ionic
 ---
@@ -19,7 +19,7 @@ We'll create a very simple counter component. All it will do is display its prop
 })
 export class Counter {
   counter: number = 123;
-  
+
   increment() {
     this.counter++;
   }
@@ -119,19 +119,19 @@ Both the decorators we saw above have a corresponding list version, which matche
   <my-dialog>
     <counter></counter>
   </my-dialog>
-  
+
   <counter></counter>
   <counter></counter>
   <counter></counter>
   <counter></counter>
   <button (click)="incrementChildren()">Increment View Children </button>
-  
+
   `
 })
 export class AppComponent {
   @ViewChild(Counter) counter: Counter;
   @ViewChildren(Counter) counters: QueryList<Counter>;
-  
+
   incrementChildren() {
     this.counters.forEach(counter => {
       counter.increment();
@@ -154,7 +154,7 @@ Consider the following bit of code:
 })
 export class Highlight {
   constructor(private el: ElementRef) { }
-  
+
   changeColor() {
     this.el.nativeElement.style.color = 'red';
   }

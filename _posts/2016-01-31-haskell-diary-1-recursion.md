@@ -1,7 +1,7 @@
 ---
-toc: true
+toc: false
 layout: post
-description:
+description: See how lazy loading in Haskell makes some very clever code possible
 categories: []
 title: Haskell Diary 1 - Recursion
 ---
@@ -21,7 +21,7 @@ Bet anyone reading this already knew that. A classic example of recursion is fib
 fibonacci 0 = 0
 fibonacci 1 = 1
 fibonacci x = fibonacci (x - 1) + fibonacci (x - 2)
-``` 
+```
 
 The reason it's called naive is because it's neither the most efficient nor the most elegant way of doing things. On my 2014 macbook pro with core i5, `fibonacci 1` gives result instantly. `fibonacci 25` seems a fraction of a second slower. `fibonacci 50` hasn't yielded results yet and I executed it 11 minutes ago.
 
@@ -36,7 +36,7 @@ Before diving in the down and low of it, following are (hopefully) self-explanat
 ```haskell
 -- tail takes a list and gives it back after removing its first element
 tail [1, 2, 3, 4, 5] -- > [2, 3, 4, 5]
-tail "haskell diary" -- > "askell diary" 
+tail "haskell diary" -- > "askell diary"
 
 -- zipWith takes a function and two lists and return the
 -- result of applying that function on corresponding elements

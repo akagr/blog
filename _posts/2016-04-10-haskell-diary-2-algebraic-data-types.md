@@ -1,7 +1,7 @@
 ---
-toc: true
+toc: false
 layout: post
-description:
+description: Theoretical analysis of what data types represent and how they behave
 categories: []
 title: Haskell Diary 2 - Algebra of Data Types
 ---
@@ -13,7 +13,7 @@ In every single Haskell guide I've been through, the term **Algebraic Data Types
 
 ```haskell
 data Bool = True | False
-```   
+```
 So when we say an expression is of type `Bool`, what values can it possibly evaluate to? It'd be either `True` or `False`. Correct? 2 possible values.
 
 Here's a quick home-made definition of a type `Weekday`:
@@ -46,7 +46,7 @@ What are the possible values of `Maybe a`? That's an absurd question unless we k
 
 Let's do it again. If an expression has type, say, `Maybe Bool`, what values can it have? `Just True`, `Just False` and `Nothing`. 3 values in total. That's 2 boolean values plus 1 new `Nothing` value.
 
-If a variable has type `Maybe Weekday`, the possible values are: 
+If a variable has type `Maybe Weekday`, the possible values are:
 
 * Just Monday
 * Just Tuesday

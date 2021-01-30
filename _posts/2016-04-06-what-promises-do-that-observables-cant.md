@@ -1,7 +1,7 @@
 ---
-toc: true
+toc: false
 layout: post
-description:
+description: Find out how to build cancellable async calls with observables
 categories: []
 title: What Promises Do That Observables Can’t
 ---
@@ -71,10 +71,10 @@ Angular 2 uses Rx.js Observables instead of promises for dealing with HTTP. This
 ```javascript
 export class App {
   qlist: String[] = [];
-  
+
   constructor (public http: Http) {
   }
-  
+
   getQuote () {
     return this.http.get('http://quotesondesign.com/wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=1');
   }

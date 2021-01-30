@@ -1,7 +1,7 @@
 ---
-toc: true
+toc: false
 layout: post
-description:
+description: Explore how to build a simple markdown parser with Haskell and megaparsec
 categories: []
 title: Beginner's guide to Megaparsec
 ---
@@ -70,7 +70,7 @@ Let's run this code and see what happens:
 
 ```bash
 $ stack runghc myparser.hs haskell
-'h' 
+'h'
 
 $ stack runghc myparser.hs javascript
 1:1:
@@ -195,7 +195,7 @@ main = do
     input <- fmap head getArgs
     parseTest wordP input
 
-wordP :: Parser String  
+wordP :: Parser String
 wordP = some alphaNumChar
 ```
 
@@ -283,7 +283,7 @@ We can similarly parse strings into our custom datatypes, convert between them a
 
 ### Conclusion
 
-There are many more tools to discover in megaparsec itself, for various general and specific tasks. With this rather lengthy tutorial, I hope I have been able to get some idea of how we can get started with writing parsers. Feel free to share thoughts on the [reddit thread][comments]. 
+There are many more tools to discover in megaparsec itself, for various general and specific tasks. With this rather lengthy tutorial, I hope I have been able to get some idea of how we can get started with writing parsers. Feel free to share thoughts on the [reddit thread][comments].
 
 [megaparsec-hackage]: https://hackage.haskell.org/package/megaparsec
 [parsec-hackage]: https://hackage.haskell.org/package/parsec

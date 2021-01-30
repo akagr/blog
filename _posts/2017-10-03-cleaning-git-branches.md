@@ -1,7 +1,7 @@
 ---
-toc: true
+toc: false
 layout: post
-description:
+description: How to clean git branches which aren't active anymore
 categories: []
 title: Cleaning merged Git branches
 ---
