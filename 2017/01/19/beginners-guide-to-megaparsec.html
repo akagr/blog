@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Beginner’s guide to Megaparsec | Akash Agrawal</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Beginner’s guide to Megaparsec" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="What is Megaparsec?" />
+<meta property="og:description" content="What is Megaparsec?" />
+<link rel="canonical" href="https://akagr.github.io/2017/01/19/beginners-guide-to-megaparsec.html" />
+<meta property="og:url" content="https://akagr.github.io/2017/01/19/beginners-guide-to-megaparsec.html" />
+<meta property="og:site_name" content="Akash Agrawal" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2017-01-19T00:00:00-06:00" />
+<script type="application/ld+json">
+{"url":"https://akagr.github.io/2017/01/19/beginners-guide-to-megaparsec.html","@type":"BlogPosting","headline":"Beginner’s guide to Megaparsec","dateModified":"2017-01-19T00:00:00-06:00","datePublished":"2017-01-19T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://akagr.github.io/2017/01/19/beginners-guide-to-megaparsec.html"},"description":"What is Megaparsec?","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://akagr.github.io/feed.xml" title="Akash Agrawal" /><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Akash Agrawal</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About Me</a><a class="page-link" href="/search/">Search</a><a class="page-link" href="/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Beginner&#39;s guide to Megaparsec</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2017-01-19T00:00:00-06:00" itemprop="datePublished">
+        Jan 19, 2017
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      9 min read
+    
+</span></p>
+
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h3"><a href="#what-is-megaparsec">What is Megaparsec?</a></li>
+<li class="toc-entry toc-h3"><a href="#environment-and-setup">Environment and Setup</a></li>
+<li class="toc-entry toc-h3"><a href="#parsing-a-single-letter">Parsing a single letter</a></li>
+<li class="toc-entry toc-h3"><a href="#how-parsing-works">How parsing works</a></li>
+<li class="toc-entry toc-h3"><a href="#parsing-this-or-that">Parsing this OR that</a></li>
+<li class="toc-entry toc-h3"><a href="#parsing-this-and-that">Parsing this AND that</a></li>
+<li class="toc-entry toc-h3"><a href="#combinators">Combinators</a></li>
+<li class="toc-entry toc-h3"><a href="#transforming-parsed-strings">Transforming parsed strings</a></li>
+<li class="toc-entry toc-h3"><a href="#conclusion">Conclusion</a></li>
+</ul><h3 id="what-is-megaparsec">
+<a class="anchor" href="#what-is-megaparsec" aria-hidden="true"><span class="octicon octicon-link"></span></a>What is Megaparsec?</h3>
+
+<p><a href="https://hackage.haskell.org/package/megaparsec">Megaparsec</a> is a parsing library written in Haskell. It’s a fork of the popular <a href="https://hackage.haskell.org/package/parsec">Parsec</a> and is more up to date.</p>
+
+<p>This post came into being because while there are tutorials for Parsec, there aren’t many for Megaparsec. As a Haskell noob, I found myself discouraged to depend on Parsec tutorials too much, given that Megaparsec may have diverged over time.</p>
+
+<p>Without further ado, let’s get right to it.</p>
+
+<h3 id="environment-and-setup">
+<a class="anchor" href="#environment-and-setup" aria-hidden="true"><span class="octicon octicon-link"></span></a>Environment and Setup</h3>
+
+<p>This post is written against <code class="language-plaintext highlighter-rouge">stack</code>, <code class="language-plaintext highlighter-rouge">ghc</code> version 8.0.1 and <code class="language-plaintext highlighter-rouge">megaparsec</code> version 5.0.1.</p>
+
+<p>We can follow the official docs for info on how to install <code class="language-plaintext highlighter-rouge">stack</code>. Once we have it up and running, installing <code class="language-plaintext highlighter-rouge">megaparsec</code> is a piece of cake:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>stack <span class="nb">install </span>megaparsec
+</code></pre></div></div>
+
+<p>Note that in a real world project, we’ll be adding <code class="language-plaintext highlighter-rouge">megaparsec</code> to our <code class="language-plaintext highlighter-rouge">.cabal</code> file, instead of installing it manually like this. However, for the purpose of this tutorial, we’ll be working with a single file instead of a full blown project.</p>
+
+<p>Next, create a Haskell source file; let’s call it <code class="language-plaintext highlighter-rouge">myparser.hs</code>.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">touch </span>myparser.hs
+</code></pre></div></div>
+
+<p>With that done, we have everything we need to begin. All the code examples below should be written in <code class="language-plaintext highlighter-rouge">myparser.hs</code>.</p>
+
+<h3 id="parsing-a-single-letter">
+<a class="anchor" href="#parsing-a-single-letter" aria-hidden="true"><span class="octicon octicon-link"></span></a>Parsing a single letter</h3>
+
+<p>Let’s start with the simplest of parsers. We’ll parse a single letter, and output results, based on whether it passed or failed. This should serve a secondary purpose of verifying that we’ve set up everything correctly.</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- myparser.hs</span>
+
+<span class="kr">module</span> <span class="nn">MyParser</span> <span class="p">(</span><span class="nf">main</span><span class="p">)</span> <span class="kr">where</span>
+
+<span class="kr">import</span> <span class="nn">Text.Megaparsec</span>
+<span class="kr">import</span> <span class="nn">Text.Megaparsec.String</span>
+<span class="kr">import</span> <span class="nn">System.Environment</span>
+
+<span class="n">main</span> <span class="o">=</span> <span class="kr">do</span>
+    <span class="n">input</span> <span class="o">&lt;-</span> <span class="n">fmap</span> <span class="n">head</span> <span class="n">getArgs</span>
+    <span class="n">parseTest</span> <span class="n">singleLetterP</span> <span class="n">input</span>
+
+<span class="n">singleLetterP</span> <span class="o">::</span> <span class="kt">Parser</span> <span class="kt">Char</span>
+<span class="n">singleLetterP</span> <span class="o">=</span> <span class="n">char</span> <span class="sc">'h'</span>
+</code></pre></div></div>
+
+<p>Let’s dissect this bit of code. <code class="language-plaintext highlighter-rouge">Text.Megaparsec</code> module is the umbrella for all the basic functions from this package. It provides methods such as <code class="language-plaintext highlighter-rouge">parseTest</code>, <code class="language-plaintext highlighter-rouge">parse</code> etc. along with a host of parsers and combinators.</p>
+
+<p><code class="language-plaintext highlighter-rouge">Text.Megaparsec.String</code> module provides the <code class="language-plaintext highlighter-rouge">Parser</code> datatype synonym. In short, this means that we’re dealing with string inputs. There are corresponding modules for <code class="language-plaintext highlighter-rouge">ByteString</code> and <code class="language-plaintext highlighter-rouge">Text</code> types for when they’re needed.</p>
+
+<p>In the first line of <code class="language-plaintext highlighter-rouge">main</code> function, we’re getting the first command line argument. We’re using a partial function <code class="language-plaintext highlighter-rouge">head</code>, which is not advised in production code. However, here, it serves our purpose, since the code will now give error if we fail to provide an argument.</p>
+
+<p>The second line of the <code class="language-plaintext highlighter-rouge">main</code> function is calling <code class="language-plaintext highlighter-rouge">parseTest</code> function. This function takes a parser and input string as arguments. It runs the parser on the input, and prints the results/error to stdout.</p>
+
+<p>Finally, <code class="language-plaintext highlighter-rouge">singleLetterP</code> is the actual parser we wrote. Take a note of its datatype. <code class="language-plaintext highlighter-rouge">Char</code> in <code class="language-plaintext highlighter-rouge">Parser Char</code> tells us what this parser will output.</p>
+
+<p>In the function definition, <code class="language-plaintext highlighter-rouge">char</code> function is a utility parser provided by <code class="language-plaintext highlighter-rouge">Text.Megaparsec.Char</code> module, which is already included in the <code class="language-plaintext highlighter-rouge">Text.Megaparsec</code> import. This parser matches a single letter provided to it as argument.</p>
+
+<p>Let’s run this code and see what happens:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>stack runghc myparser.hs haskell
+<span class="s1">'h'</span> 
+
+<span class="nv">$ </span>stack runghc myparser.hs javascript
+1:1:
+unexpected <span class="s1">'j'</span>
+expecting <span class="s1">'h'</span>
+</code></pre></div></div>
+
+<p>So we get our first working parser, which gives us the result or helpful error messages to boot.</p>
+
+<h3 id="how-parsing-works">
+<a class="anchor" href="#how-parsing-works" aria-hidden="true"><span class="octicon octicon-link"></span></a>How parsing works</h3>
+
+<p>When we run a parser, it begins parsing from the very beginning of input. The parser we write should match the input continuously, or it’ll fail. Also, the parser will match/consume only as much as we’ll tell it to.</p>
+
+<p>For instance, in our example above, when we supplied ‘haskell’ as the input string, it matched <code class="language-plaintext highlighter-rouge">h</code> from the very beginning, because that’s all we coded. It stopped matching after that.</p>
+
+<p>If we had provided <code class="language-plaintext highlighter-rouge">jhaskell</code> or something else, it’ll still fail. That’s because the parser <code class="language-plaintext highlighter-rouge">char 'h'</code> will not arbitrarily match ‘h’ from anywhere in the string. It’ll consume a single letter from beginning and pass or fail depending on whether it’s ‘h’.</p>
+
+<p>That said, we’ll see how to tie together multiple parsers which let us skip letters or run multiple parsers over same inputs to see what fits.</p>
+
+<h3 id="parsing-this-or-that">
+<a class="anchor" href="#parsing-this-or-that" aria-hidden="true"><span class="octicon octicon-link"></span></a>Parsing this OR that</h3>
+
+<p>What if we have a scenario where we want to be able to run more than one parser on same input, in case the previous one fails. We have a handy infix function <code class="language-plaintext highlighter-rouge">&lt;|&gt;</code> for exactly that.</p>
+
+<p>Observe:</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- myparser.hs</span>
+
+<span class="c1">-- ... imports and module declaration ...</span>
+
+<span class="n">main</span> <span class="o">=</span> <span class="kr">do</span>
+    <span class="n">input</span> <span class="o">&lt;-</span> <span class="n">fmap</span> <span class="n">head</span> <span class="n">getArgs</span>
+    <span class="n">parseTest</span> <span class="n">singleLetterP</span> <span class="n">input</span>
+
+<span class="n">singleLetterP</span> <span class="o">::</span> <span class="kt">Parser</span> <span class="kt">Char</span>
+<span class="n">singleLetterP</span> <span class="o">=</span> <span class="n">char</span> <span class="sc">'h'</span> <span class="o">&lt;|&gt;</span> <span class="n">char</span> <span class="sc">'j'</span>
+</code></pre></div></div>
+
+<p>Now, this parser will match anything starting with ‘h’ or ‘j’. Here’s our code in action:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>stack runghc myparser.hs haskell
+<span class="s1">'h'</span>
+
+<span class="nv">$ </span>stack runghc myparser.hs javascript
+<span class="s1">'j'</span>
+
+<span class="nv">$ </span>stack runghc myparser.hs ruby
+1:1:
+unexpected <span class="s1">'a'</span>
+expecting <span class="s1">'h'</span> or <span class="s1">'j'</span>
+</code></pre></div></div>
+
+<p>Even though we’ve only combined two single letter parsers, this infix method <code class="language-plaintext highlighter-rouge">&lt;|&gt;</code> works on arbitrarily complex parsers.</p>
+
+<h3 id="parsing-this-and-that">
+<a class="anchor" href="#parsing-this-and-that" aria-hidden="true"><span class="octicon octicon-link"></span></a>Parsing this AND that</h3>
+
+<p>As we’ve seen, <code class="language-plaintext highlighter-rouge">&lt;|&gt;</code> basically acts as boolean OR function for parsers. But we also want to be able to run more than one parser one after another sequentially, each parser consuming a part of input string, and forwarding the rest onwards.</p>
+
+<p>Fortunately, the datatype <code class="language-plaintext highlighter-rouge">Parser a</code> belongs to Monad typeclass. Which means we get the <code class="language-plaintext highlighter-rouge">&gt;&gt;=</code> (bind function) to compose multiple parsers.</p>
+
+<p>Let’s modify our code so that our parser will match two letters, one after another.</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- myparser.hs</span>
+
+<span class="c1">-- ... imports and module declaration ...</span>
+
+<span class="n">main</span> <span class="o">=</span> <span class="kr">do</span>
+    <span class="n">input</span> <span class="o">&lt;-</span> <span class="n">fmap</span> <span class="n">head</span> <span class="n">getArgs</span>
+    <span class="n">parseTest</span> <span class="n">doubleLetterP</span> <span class="n">input</span>
+
+<span class="n">doubleLetterP</span> <span class="o">::</span> <span class="kt">Parser</span> <span class="kt">Char</span>
+<span class="n">doubleLetterP</span> <span class="o">=</span> <span class="n">char</span> <span class="sc">'h'</span> <span class="o">&gt;&gt;=</span> <span class="p">(</span><span class="nf">\</span> <span class="kr">_</span> <span class="o">-&gt;</span> <span class="n">char</span> <span class="sc">'a'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Now, our <code class="language-plaintext highlighter-rouge">doubleLetterP</code> parser will consume a single letter ‘h’, followed by a single letter ‘a’.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ stack runghc myparser.hs haskell
+'a'
+
+$ stack runghc myparser.hs hoogle
+unexpected 'o'
+expecting 'a'
+
+$ stack runghc myparser.hs assembly
+1:1:
+unexpected 'a'
+expecting 'h'
+</code></pre></div></div>
+
+<p>The syntax we’ve used to combine two parsers this way leaves something to be desired. Fortunately, by the virtue of being a member of Monad typeclass, we get the <code class="language-plaintext highlighter-rouge">do</code> syntax for free.</p>
+
+<p>Following parser does the exact same thing as the previous example, only with an arguably more readable syntax:</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- myparser.hs</span>
+
+<span class="c1">-- ... imports and main function ...</span>
+
+<span class="n">doubleLetterP</span> <span class="o">::</span> <span class="kt">Parser</span> <span class="kt">Char</span>
+<span class="n">doubleLetterP</span> <span class="o">=</span> <span class="kr">do</span>
+    <span class="n">char</span> <span class="sc">'h'</span>
+    <span class="n">char</span> <span class="sc">'a'</span>
+</code></pre></div></div>
+
+<p>So far, we’ve only been using a single parser - <code class="language-plaintext highlighter-rouge">char</code>. There are many other useful parsers which we have in our arsenal out of the box. For the full list, check out the API docs for <a href="https://hackage.haskell.org/package/megaparsec-5.1.2/docs/Text-Megaparsec-Char.html">Text.Megaparsec.Char</a>.</p>
+
+<h3 id="combinators">
+<a class="anchor" href="#combinators" aria-hidden="true"><span class="octicon octicon-link"></span></a>Combinators</h3>
+
+<p>Combinators are functions that we use to combine one or more parsers in different ways. We’ve already seen one of them - the <code class="language-plaintext highlighter-rouge">&lt;|&gt;</code> function. But that’s neither the only combinator available to us, nor is that that only way we can combine our parsers.</p>
+
+<p>Let’s write a parser to match a word. We define word as a continuous string of alphanumeric characters. Any spaces, tabs and/or special characters are not included.</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- myparser.hs</span>
+
+<span class="c1">-- ... imports ...</span>
+
+<span class="n">main</span> <span class="o">=</span> <span class="kr">do</span>
+    <span class="n">input</span> <span class="o">&lt;-</span> <span class="n">fmap</span> <span class="n">head</span> <span class="n">getArgs</span>
+    <span class="n">parseTest</span> <span class="n">wordP</span> <span class="n">input</span>
+
+<span class="n">wordP</span> <span class="o">::</span> <span class="kt">Parser</span> <span class="kt">String</span>  
+<span class="n">wordP</span> <span class="o">=</span> <span class="n">some</span> <span class="n">alphaNumChar</span>
+</code></pre></div></div>
+
+<p>Firstly, note the change in datatype of our <code class="language-plaintext highlighter-rouge">wordP</code> function. Since we now expect our parser to match a string instead of single character, the datatype will reflect that. Feel free to check out what error we get if we change that back to <code class="language-plaintext highlighter-rouge">Parser Char</code>.</p>
+
+<p>Secondly, we’ve introduced a combinator here, namely <code class="language-plaintext highlighter-rouge">some</code>. This is a function that takes a parser as argument. In our example, <code class="language-plaintext highlighter-rouge">alphaNumChar</code> is that argument. <code class="language-plaintext highlighter-rouge">some</code> will try to run the parser continuously one or more times as long as it keeps getting successful.</p>
+
+<p>Here’s our new parser in action</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>stack runghc myparser.hs haskell
+<span class="s2">"haskell"</span>
+
+<span class="nv">$ </span>stack runghc myparser.hs <span class="s2">"haskell hoogle"</span>
+<span class="s2">"haskell"</span>
+
+<span class="nv">$ </span>stack runghc myparser.hs <span class="s2">";haskell"</span>
+1:1:
+unexpected <span class="s1">';'</span>
+expecting alphanumeric character
+
+<span class="nv">$ </span>stack runghc myparser.hs <span class="s2">""</span>
+1:1:
+unexpected end of input
+expecting alphanumeric character
+</code></pre></div></div>
+
+<p>One of the major ups of using megaparsec is the helpful error messages we get without doing anything extra.</p>
+
+<p>Note: There’s also a <code class="language-plaintext highlighter-rouge">many</code> combinator which matches 0 or more occurrences of the supplied parser.</p>
+
+<h3 id="transforming-parsed-strings">
+<a class="anchor" href="#transforming-parsed-strings" aria-hidden="true"><span class="octicon octicon-link"></span></a>Transforming parsed strings</h3>
+
+<p>More often than not, if we’re parsing a string, it’s because we want to extract some data out from it and do something with it. For example, we might be parsing an entries from account statement, and we want to convert the parsed balances to a number type.</p>
+
+<p>For this example, we’ll try to parse the bold notation of markdown and convert it to html tag. In markdown, if we have to make text bold, we enclose it in <code class="language-plaintext highlighter-rouge">**</code>. For instance, <code class="language-plaintext highlighter-rouge">**This is bold**</code> will show up as <strong>This is bold</strong> after conversion.</p>
+
+<p>Behind the scenes, the markdown converter parses the text inside <code class="language-plaintext highlighter-rouge">**</code> delimiters, and puts it in <code class="language-plaintext highlighter-rouge">&lt;strong&gt;</code> tags. Let’s try to write a parser which does this.</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- myparser.hs</span>
+
+<span class="c1">-- ... imports ...</span>
+
+<span class="n">main</span> <span class="o">=</span> <span class="kr">do</span>
+    <span class="n">input</span> <span class="o">&lt;-</span> <span class="n">fmap</span> <span class="n">head</span> <span class="n">getArgs</span>
+    <span class="n">parseTest</span> <span class="n">boldP</span> <span class="n">input</span>
+
+<span class="n">boldP</span> <span class="o">::</span> <span class="kt">Parser</span> <span class="kt">String</span>
+<span class="n">boldP</span> <span class="o">=</span> <span class="kr">do</span>
+    <span class="kr">_</span> <span class="o">&lt;-</span> <span class="n">count</span> <span class="mi">2</span> <span class="p">(</span><span class="n">char</span> <span class="sc">'*'</span><span class="p">)</span>
+    <span class="n">txt</span> <span class="o">&lt;-</span> <span class="n">some</span> <span class="p">(</span><span class="n">alphaNumChar</span> <span class="o">&lt;|&gt;</span> <span class="n">char</span> <span class="sc">' '</span><span class="p">)</span>
+    <span class="kr">_</span> <span class="o">&lt;-</span> <span class="n">count</span> <span class="mi">2</span> <span class="p">(</span><span class="n">char</span> <span class="sc">'*'</span><span class="p">)</span>
+    <span class="n">return</span> <span class="o">$</span> <span class="n">concat</span> <span class="p">[</span> <span class="s">"&lt;strong&gt;"</span><span class="p">,</span> <span class="n">txt</span><span class="p">,</span> <span class="s">"&lt;/strong&gt;"</span> <span class="p">]</span>
+
+</code></pre></div></div>
+
+<p>Let’s look into what’s happening in our <code class="language-plaintext highlighter-rouge">boldP</code> parser. <code class="language-plaintext highlighter-rouge">count</code> is another combinator we have which allows us to consume a set number of matches for a parser.</p>
+
+<p>In this instance, first, we consume two <code class="language-plaintext highlighter-rouge">*</code> characters. Then, we consume one or more alphanumeric characters, as well as spaces.
+Lastly, we consume another two <code class="language-plaintext highlighter-rouge">*</code> characters.</p>
+
+<p>The more interesting thing happening here is that we are able to extract the matched string into a variable. We can do that with any parser we write, because all <code class="language-plaintext highlighter-rouge">Parser</code>s are monads.</p>
+
+<p>In the last line of our <code class="language-plaintext highlighter-rouge">boldP</code>, we simply wrap the extracted text from between the <code class="language-plaintext highlighter-rouge">**</code> with <code class="language-plaintext highlighter-rouge">&lt;strong&gt;</code> tags.</p>
+
+<p>Let’s see this parser in action:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>stack runghc myparser.hs <span class="s1">'** haskell **'</span>
+<span class="s2">"&lt;strong&gt; haskell &lt;/strong&gt;"</span>
+
+<span class="nv">$ </span>stack runghc myparser.hs <span class="s2">"**haskell has functions**"</span>
+<span class="s2">"&lt;strong&gt;haskell has functions&lt;/strong&gt;"</span>
+
+<span class="nv">$ </span>stack runghc myparser.hs haskell
+1:1:
+unexpected <span class="s1">'h'</span>
+expecting <span class="s1">'*'</span>
+</code></pre></div></div>
+
+<p>Note that our parser only matches alphanumeric characters and spaces between the delimiters. It’ll be more robust when it matches pretty much anything between the delimiters. Feel free to implement that.</p>
+
+<p>We can similarly parse strings into our custom datatypes, convert between them and more. We just need to remember that the datatype of the final output of parser is reflected in the datatype of the parser itself.</p>
+
+<h3 id="conclusion">
+<a class="anchor" href="#conclusion" aria-hidden="true"><span class="octicon octicon-link"></span></a>Conclusion</h3>
+
+<p>There are many more tools to discover in megaparsec itself, for various general and specific tasks. With this rather lengthy tutorial, I hope I have been able to get some idea of how we can get started with writing parsers. Feel free to share thoughts on the <a href="https://www.reddit.com/r/haskell/comments/5ow2v5/beginners_guide_to_megaparsec/">reddit thread</a>.</p>
+
+
+  </div><a class="u-url" href="/2017/01/19/beginners-guide-to-megaparsec.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Lessons and ramblings. Thoughts and speculations. Opinions are my own.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/akagr" title="akagr"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/akshagrwl" title="akshagrwl"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

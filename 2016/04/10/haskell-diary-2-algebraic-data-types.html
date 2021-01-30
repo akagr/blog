@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Haskell Diary | Akash Agrawal</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Haskell Diary" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="In every single Haskell guide I’ve been through, the term Algebraic Data Types is mentioned at least once. In most cases, the text simply moved on to how types are defined and used. A small minority actually tries to explain why Haskell’s data types are called Algebraic. An even smaller minority succeeded in getting the point across. Here’s me documenting what I’ve learned so far about them. Hopefully it’d be of some help for future Haskell learners." />
+<meta property="og:description" content="In every single Haskell guide I’ve been through, the term Algebraic Data Types is mentioned at least once. In most cases, the text simply moved on to how types are defined and used. A small minority actually tries to explain why Haskell’s data types are called Algebraic. An even smaller minority succeeded in getting the point across. Here’s me documenting what I’ve learned so far about them. Hopefully it’d be of some help for future Haskell learners." />
+<link rel="canonical" href="https://akagr.github.io/2016/04/10/haskell-diary-2-algebraic-data-types.html" />
+<meta property="og:url" content="https://akagr.github.io/2016/04/10/haskell-diary-2-algebraic-data-types.html" />
+<meta property="og:site_name" content="Akash Agrawal" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2016-04-10T00:00:00-05:00" />
+<script type="application/ld+json">
+{"url":"https://akagr.github.io/2016/04/10/haskell-diary-2-algebraic-data-types.html","@type":"BlogPosting","headline":"Haskell Diary","dateModified":"2016-04-10T00:00:00-05:00","datePublished":"2016-04-10T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://akagr.github.io/2016/04/10/haskell-diary-2-algebraic-data-types.html"},"description":"In every single Haskell guide I’ve been through, the term Algebraic Data Types is mentioned at least once. In most cases, the text simply moved on to how types are defined and used. A small minority actually tries to explain why Haskell’s data types are called Algebraic. An even smaller minority succeeded in getting the point across. Here’s me documenting what I’ve learned so far about them. Hopefully it’d be of some help for future Haskell learners.","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://akagr.github.io/feed.xml" title="Akash Agrawal" /><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Akash Agrawal</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About Me</a><a class="page-link" href="/search/">Search</a><a class="page-link" href="/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Haskell Diary</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2016-04-10T00:00:00-05:00" itemprop="datePublished">
+        Apr 10, 2016
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      8 min read
+    
+</span></p>
+
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h3"><a href="#some-background-first">Some background first</a></li>
+<li class="toc-entry toc-h3"><a href="#sum">Sum</a></li>
+<li class="toc-entry toc-h3"><a href="#product">Product</a></li>
+<li class="toc-entry toc-h3"><a href="#data-types-follow-algebraic-laws">Data types follow algebraic laws</a></li>
+<li class="toc-entry toc-h3"><a href="#exponents">Exponents</a></li>
+<li class="toc-entry toc-h3"><a href="#conclusion">Conclusion</a></li>
+</ul><p>In every single Haskell guide I’ve been through, the term <strong>Algebraic Data Types</strong> is mentioned at least once. In most cases, the text simply moved on to how types are defined and used. A small minority actually tries to explain why Haskell’s data types are called <code class="language-plaintext highlighter-rouge">Algebraic</code>. An even smaller minority succeeded in getting the point across. Here’s me documenting what I’ve learned so far about them. Hopefully it’d be of some help for future Haskell learners.</p>
+
+<h3 id="some-background-first">
+<a class="anchor" href="#some-background-first" aria-hidden="true"><span class="octicon octicon-link"></span></a>Some background first</h3>
+
+<p><code class="language-plaintext highlighter-rouge">Bool</code> is one of the simplest data type in Haskell. Its defined as:</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kr">data</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kt">True</span> <span class="o">|</span> <span class="kt">False</span>
+</code></pre></div></div>
+<p>So when we say an expression is of type <code class="language-plaintext highlighter-rouge">Bool</code>, what values can it possibly evaluate to? It’d be either <code class="language-plaintext highlighter-rouge">True</code> or <code class="language-plaintext highlighter-rouge">False</code>. Correct? 2 possible values.</p>
+
+<p>Here’s a quick home-made definition of a type <code class="language-plaintext highlighter-rouge">Weekday</code>:</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kr">data</span> <span class="kt">Weekday</span> <span class="o">=</span> <span class="kt">Monday</span>    <span class="o">|</span>
+               <span class="kt">Tuesday</span>   <span class="o">|</span>
+               <span class="kt">Wednesday</span> <span class="o">|</span>
+               <span class="kt">Thursday</span>  <span class="o">|</span>
+               <span class="kt">Friday</span>    <span class="o">|</span>
+               <span class="kt">Saturday</span>  <span class="o">|</span>
+               <span class="kt">Sunday</span>
+</code></pre></div></div>
+<p>Now, if we say that an expression is of type <code class="language-plaintext highlighter-rouge">Weekday</code>, what are the possible values here. Any of the days we defined would be correct. That gives us 7 possible values whose type would be <code class="language-plaintext highlighter-rouge">Weekday</code>.</p>
+
+<p>Let’s associate (in our minds) types with the number of values possible. So <code class="language-plaintext highlighter-rouge">Bool</code> is a 2. And <code class="language-plaintext highlighter-rouge">Weekday</code> is a 7. Similarly, if we check the max and min bounds of <code class="language-plaintext highlighter-rouge">Int</code>, we can put <code class="language-plaintext highlighter-rouge">Int</code> to <code class="language-plaintext highlighter-rouge">2 ^ 64</code> (because that many values are possible with <code class="language-plaintext highlighter-rouge">Int</code> data type).</p>
+
+<p>This is something to keep in mind going forward. A data type can be associated to a number based on how many values an expression of that type can possibly evaluate to. Also, it is totally legit for a type to have infinite possible values (think <code class="language-plaintext highlighter-rouge">String</code>).</p>
+
+<h3 id="sum">
+<a class="anchor" href="#sum" aria-hidden="true"><span class="octicon octicon-link"></span></a>Sum</h3>
+<p>Now we can get to the <strong>Algebra</strong> part. Here’s the all-too-familiar definition of <code class="language-plaintext highlighter-rouge">Maybe</code>.</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kr">data</span> <span class="kt">Maybe</span> <span class="n">a</span> <span class="o">=</span> <span class="kt">Just</span> <span class="n">a</span> <span class="o">|</span> <span class="kt">Nothing</span>
+<span class="c1">--   Maybe a =   a    +   1</span>
+</code></pre></div></div>
+<p>Ignore the comment in the second line for now.</p>
+
+<p>What are the possible values of <code class="language-plaintext highlighter-rouge">Maybe a</code>? That’s an absurd question unless we know what <code class="language-plaintext highlighter-rouge">a </code> is.</p>
+
+<p>Let’s do it again. If an expression has type, say, <code class="language-plaintext highlighter-rouge">Maybe Bool</code>, what values can it have? <code class="language-plaintext highlighter-rouge">Just True</code>, <code class="language-plaintext highlighter-rouge">Just False</code> and <code class="language-plaintext highlighter-rouge">Nothing</code>. 3 values in total. That’s 2 boolean values plus 1 new <code class="language-plaintext highlighter-rouge">Nothing</code> value.</p>
+
+<p>If a variable has type <code class="language-plaintext highlighter-rouge">Maybe Weekday</code>, the possible values are:</p>
+
+<ul>
+  <li>Just Monday</li>
+  <li>Just Tuesday</li>
+  <li>Just Wednesday</li>
+  <li>Just Thursday</li>
+  <li>Just Friday</li>
+  <li>Just Saturday</li>
+  <li>Just Sunday</li>
+  <li>Nothing</li>
+</ul>
+
+<p>So that’s 7 <code class="language-plaintext highlighter-rouge">Weekday</code> values plus 1 <code class="language-plaintext highlighter-rouge">Nothing</code>. Now check out the comment in the code snippet above again and see if it makes some sense.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">|</code> operator in type definitions is acting like <code class="language-plaintext highlighter-rouge">+</code>. Data constructors which do not take any types (like <code class="language-plaintext highlighter-rouge">Nothing</code>) act as constants and represent a value in themselves. Let’s see one more example of this to cement this insight.</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kr">data</span> <span class="kt">Either</span> <span class="n">a</span> <span class="n">b</span> <span class="o">=</span> <span class="kt">Left</span> <span class="n">a</span> <span class="o">|</span> <span class="kt">Right</span> <span class="n">b</span>
+<span class="c1">--   Either a b =    a   +   b</span>
+</code></pre></div></div>
+
+<p>The possible values corresponding to type <code class="language-plaintext highlighter-rouge">Either Bool Weekday</code> are:</p>
+
+<ul>
+  <li>Left True</li>
+  <li>Left False</li>
+  <li>Right Monday</li>
+  <li>Right Tuesday</li>
+  <li>Right Wednesday</li>
+  <li>Right Thursday</li>
+  <li>Right Friday</li>
+  <li>Right Saturday</li>
+  <li>Right Sunday</li>
+</ul>
+
+<p>That’s 2 + 7 = 9 possible values in total.</p>
+
+<h3 id="product">
+<a class="anchor" href="#product" aria-hidden="true"><span class="octicon octicon-link"></span></a>Product</h3>
+<p>Like the sum, data types can also be defined as products of other data types. Here’s a quick example using a custom data type.</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kr">data</span> <span class="kt">Tuple</span> <span class="n">a</span> <span class="n">b</span> <span class="o">=</span> <span class="kt">Tuple</span> <span class="n">a</span> <span class="n">b</span>
+</code></pre></div></div>
+
+<p>Let’s apply some concrete type to both <code class="language-plaintext highlighter-rouge">a</code> and <code class="language-plaintext highlighter-rouge">b</code> and see what values are possible.</p>
+
+<p>For <code class="language-plaintext highlighter-rouge">Tuple Bool Bool</code>, we have the following possible values:</p>
+
+<ul>
+  <li>Tuple True False</li>
+  <li>Tuple True True</li>
+  <li>Tuple False False</li>
+  <li>Tuple False True</li>
+</ul>
+
+<p>That’s 2 * 2 = 4 values.</p>
+
+<p>For <code class="language-plaintext highlighter-rouge">Tuple Bool Weekday</code>, the possible values are:</p>
+
+<ul>
+  <li>Tuple True Monday</li>
+  <li>Tuple True Tuesday</li>
+  <li>Tuple True Wednesday</li>
+  <li>Tuple True Thursday</li>
+  <li>Tuple True Friday</li>
+  <li>Tuple True Saturday</li>
+  <li>Tuple True Sunday</li>
+  <li>Tuple False Monday</li>
+  <li>Tuple False Tuesday</li>
+  <li>Tuple False Wednesday</li>
+  <li>Tuple False Thursday</li>
+  <li>Tuple False Friday</li>
+  <li>Tuple False Saturday</li>
+  <li>Tuple False Sunday</li>
+</ul>
+
+<p>That’s 2 * 7 = 14 values.</p>
+
+<p>While <code class="language-plaintext highlighter-rouge">|</code> acts like sum, specifying data types as composites is similarly equivalent to multiplication. <code class="language-plaintext highlighter-rouge">Tuple Weekday Weekday</code> will give 49 possible values. Because <code class="language-plaintext highlighter-rouge">Weekday * Weekday</code> or <code class="language-plaintext highlighter-rouge">7 * 7</code>.</p>
+
+<h3 id="data-types-follow-algebraic-laws">
+<a class="anchor" href="#data-types-follow-algebraic-laws" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data types follow algebraic laws</h3>
+
+<p>We can check this real quick by seeing how they follow distribution. For a refresher, distributive law is defined as</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>a * (b + c) == (a * b) + (a * c)
+</code></pre></div></div>
+
+<p>Let’s see if we can prove that this law holds for data types. Left side of equation first. We need a data type which corresponds to <code class="language-plaintext highlighter-rouge">a * (b + c)</code>. We already know from above that <code class="language-plaintext highlighter-rouge">Either b c</code> is equivalent to <code class="language-plaintext highlighter-rouge">b + c</code>. To multiply it with <code class="language-plaintext highlighter-rouge">a</code>, we put that in a composite data type as follows.</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kr">data</span> <span class="kt">DLeft</span> <span class="n">a</span> <span class="n">b</span> <span class="n">c</span> <span class="o">=</span> <span class="kt">DLeft</span> <span class="n">a</span> <span class="p">(</span><span class="kt">Either</span> <span class="n">b</span> <span class="n">c</span><span class="p">)</span>
+<span class="c1">--   DLeft a b c =       a * (b + c)</span>
+</code></pre></div></div>
+
+<p>Next, we’ll construct a data type which corresponds to right side of equation.</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kr">data</span> <span class="kt">DRight</span> <span class="n">a</span> <span class="n">b</span> <span class="n">c</span> <span class="o">=</span> <span class="kt">DRLeft</span> <span class="n">a</span> <span class="n">b</span> <span class="o">|</span> <span class="kt">DRRight</span> <span class="n">a</span> <span class="n">c</span>
+<span class="c1">--   DRight a b c =   (a * b)  +  (a * c)</span>
+</code></pre></div></div>
+
+<p>All that’s left is to see if those two give the same number of possible values. Let’s put <code class="language-plaintext highlighter-rouge">a = Bool</code>, <code class="language-plaintext highlighter-rouge">b = Bool</code> and <code class="language-plaintext highlighter-rouge">c = Weekday</code>.</p>
+
+<p><code class="language-plaintext highlighter-rouge">DLeft Bool Bool Weekday</code> will have the following values:</p>
+
+<ul>
+  <li>DLeft True (Left True)</li>
+  <li>DLeft True (Left False)</li>
+  <li>DLeft True (Left Sunday)</li>
+  <li>DLeft True (Right Monday)</li>
+  <li>DLeft True (Right Tuesday)</li>
+  <li>DLeft True (Right Wednesday)</li>
+  <li>DLeft True (Right Thursday)</li>
+  <li>DLeft True (Right Friday)</li>
+  <li>DLeft True (Right Saturday)</li>
+  <li>DLeft True (Right Sunday)</li>
+  <li>DLeft False (Left True)</li>
+  <li>DLeft False (Left False)</li>
+  <li>DLeft False (Right Sunday)</li>
+  <li>DLeft False (Right Monday)</li>
+  <li>DLeft False (Right Tuesday)</li>
+  <li>DLeft False (Right Wednesday)</li>
+  <li>DLeft False (Right Thursday)</li>
+  <li>DLeft False (Right Friday)</li>
+  <li>DLeft False (Right Saturday)</li>
+  <li>DLeft False (Right Sunday)</li>
+</ul>
+
+<p>Which are be <code class="language-plaintext highlighter-rouge">Bool * (Bool + Weekday)</code> or <code class="language-plaintext highlighter-rouge">2 * (2 + 7)</code> = 18 values in total.</p>
+
+<p>Let’s see if the <code class="language-plaintext highlighter-rouge">DRight Bool Bool Weekday</code> offers the same number of values.</p>
+
+<ul>
+  <li>DRLeft False False</li>
+  <li>DRLeft False True</li>
+  <li>DRLeft True False</li>
+  <li>DRLeft True True</li>
+  <li>DRRight False Monday</li>
+  <li>DRRight False Tuesday</li>
+  <li>DRRight False Wednesday</li>
+  <li>DRRight False Thursday</li>
+  <li>DRRight False Friday</li>
+  <li>DRRight False Saturday</li>
+  <li>DRRight False Sunday</li>
+  <li>DRRight False Monday</li>
+  <li>DRRight True Tuesday</li>
+  <li>DRRight True Wednesday</li>
+  <li>DRRight True Thursday</li>
+  <li>DRRight True Friday</li>
+  <li>DRRight True Saturday</li>
+  <li>DRRight True Sunday</li>
+</ul>
+
+<p>That’s <code class="language-plaintext highlighter-rouge">(Bool * Bool) + (Bool * Weekday)</code> or <code class="language-plaintext highlighter-rouge">(2 * 2) + (2 * 7)</code> = 18 values.</p>
+
+<p>Hence Proved! I always loved writing this :)</p>
+
+<h3 id="exponents">
+<a class="anchor" href="#exponents" aria-hidden="true"><span class="octicon octicon-link"></span></a>Exponents</h3>
+
+<p>Sum and product aren’t the only operations out there. One of the most common data types in Haskell is actually exponential. We know them as <code class="language-plaintext highlighter-rouge">(-&gt;)</code> or more generally as functions.
+This is a lot bigger topic but I will quickly list out how to visualise them.</p>
+
+<p>For our example, we’ll use a simple function of type <code class="language-plaintext highlighter-rouge">Weekday -&gt; Bool</code>. How many ways are possible to write a function of that type while being total (not skipping any Weekdays).</p>
+
+<ul>
+  <li>myFunc Monday = True</li>
+  <li>myFunc Tuesday = True</li>
+  <li>myFunc Wednesday = True</li>
+  <li>myFunc Thursday = True</li>
+  <li>myFunc Friday = True</li>
+  <li>myFunc Saturday = True</li>
+  <li>myFunc Sunday = True</li>
+</ul>
+
+<p>Note that above is just one possible definition of such a function, not 7. This function can now take a Weekday (any one of them) and return a Bool. It may have been better to write it in short like <code class="language-plaintext highlighter-rouge">myFunc _ = True</code>.
+We’re talking about how many ways a function can be defined, instead of the number of possible values in previous operations.
+If we change any of the <code class="language-plaintext highlighter-rouge">True</code> in above definition to <code class="language-plaintext highlighter-rouge">False</code>, it’s a whole new function. What if we change a couple of <code class="language-plaintext highlighter-rouge">True</code> above to <code class="language-plaintext highlighter-rouge">False</code>? That’s yet another function. Writing all that will make this the longest post ever.
+So I’m gonna believe in reader and leave them to write all the possible definitions. In the end, the number of ways a similarly trivial function from <code class="language-plaintext highlighter-rouge">Weekday -&gt; Bool</code> can be defined is 128 which is <code class="language-plaintext highlighter-rouge">2 ^ 7</code> or <code class="language-plaintext highlighter-rouge">Bool ^ Weekday</code>.</p>
+
+<p>To formalise it, a function <code class="language-plaintext highlighter-rouge">a -&gt; b</code> corresponds to algebraic operation <code class="language-plaintext highlighter-rouge">b ^ a</code>.</p>
+
+<h3 id="conclusion">
+<a class="anchor" href="#conclusion" aria-hidden="true"><span class="octicon octicon-link"></span></a>Conclusion</h3>
+
+<p>I wrote this post for a select species of programmers who like to know what they’re playing with with usability of that knowledge being non-consequential. I think that in general course of things, all the text above is not super handy and will probably not help someone write that awesome web server or parser. So, sincere apologies if I wasted your time.</p>
+
+<p>For a fuller discussion on the algebra of data types, including recursive types, there’s a great series of posts <a href="https://chris-taylor.github.io/blog/2013/02/10/the-algebra-of-algebraic-data-types/">here</a>.</p>
+
+<p>I’ll appreciate any and all feedback. Use this <a href="https://www.reddit.com/r/haskell/comments/4e5fxp/haskell_diary_2_algebra_of_data_types/">reddit thread</a>. Thanks for reading!</p>
+
+  </div><a class="u-url" href="/2016/04/10/haskell-diary-2-algebraic-data-types.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Lessons and ramblings. Thoughts and speculations. Opinions are my own.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/akagr" title="akagr"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/akshagrwl" title="akshagrwl"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

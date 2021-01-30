@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Accessing child elements in Angular / Ionic | Akash Agrawal</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Accessing child elements in Angular / Ionic" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Components are at the heart of Angular, and we have some very useful tools to work with them efficiently. Often, we need to access the children - child elements, in other words - of our components. This can mean getting a reference to the DOM element, or to the actual component object if one exists. For this, we have at our disposal two handy decorators @ViewChild and @ContentChild, along with their list counterparts - @ViewChildren and @ContentChildren. Let’s see why there are two of these and how we can use them." />
+<meta property="og:description" content="Components are at the heart of Angular, and we have some very useful tools to work with them efficiently. Often, we need to access the children - child elements, in other words - of our components. This can mean getting a reference to the DOM element, or to the actual component object if one exists. For this, we have at our disposal two handy decorators @ViewChild and @ContentChild, along with their list counterparts - @ViewChildren and @ContentChildren. Let’s see why there are two of these and how we can use them." />
+<link rel="canonical" href="https://akagr.github.io/2017/10/03/childelements-in-angular.html" />
+<meta property="og:url" content="https://akagr.github.io/2017/10/03/childelements-in-angular.html" />
+<meta property="og:site_name" content="Akash Agrawal" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2017-10-03T00:00:00-05:00" />
+<script type="application/ld+json">
+{"url":"https://akagr.github.io/2017/10/03/childelements-in-angular.html","@type":"BlogPosting","headline":"Accessing child elements in Angular / Ionic","dateModified":"2017-10-03T00:00:00-05:00","datePublished":"2017-10-03T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://akagr.github.io/2017/10/03/childelements-in-angular.html"},"description":"Components are at the heart of Angular, and we have some very useful tools to work with them efficiently. Often, we need to access the children - child elements, in other words - of our components. This can mean getting a reference to the DOM element, or to the actual component object if one exists. For this, we have at our disposal two handy decorators @ViewChild and @ContentChild, along with their list counterparts - @ViewChildren and @ContentChildren. Let’s see why there are two of these and how we can use them.","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://akagr.github.io/feed.xml" title="Akash Agrawal" /><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Akash Agrawal</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About Me</a><a class="page-link" href="/search/">Search</a><a class="page-link" href="/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Accessing child elements in Angular / Ionic</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2017-10-03T00:00:00-05:00" itemprop="datePublished">
+        Oct 3, 2017
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      6 min read
+    
+</span></p>
+
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h3"><a href="#before-we-begin">Before we begin</a></li>
+<li class="toc-entry toc-h3"><a href="#children-in-components-template">Children in component’s template</a></li>
+<li class="toc-entry toc-h3"><a href="#children-in-components-projected-content">Children in component’s projected content</a></li>
+<li class="toc-entry toc-h3"><a href="#matching-more-than-one-child">Matching more than one child</a></li>
+<li class="toc-entry toc-h3"><a href="#summing-up">Summing up</a></li>
+</ul><p>Components are at the heart of Angular, and we have some very useful tools to work with them efficiently. Often, we need to access the children - child elements, in other words - of our components. This can mean getting a reference to the DOM element, or to the actual component object if one exists. For this, we have at our disposal two handy decorators <code class="language-plaintext highlighter-rouge">@ViewChild</code> and <code class="language-plaintext highlighter-rouge">@ContentChild</code>, along with their list counterparts - <code class="language-plaintext highlighter-rouge">@ViewChildren</code> and <code class="language-plaintext highlighter-rouge">@ContentChildren</code>. Let’s see why there are two of these and how we can use them.</p>
+
+<h3 id="before-we-begin">
+<a class="anchor" href="#before-we-begin" aria-hidden="true"><span class="octicon octicon-link"></span></a>Before we begin</h3>
+
+<p>We’ll create a very simple counter component. All it will do is display its property and have a method we can use to increment it. We’ll demonstrate how to access this component’s <code class="language-plaintext highlighter-rouge">increment</code> method to increase the value later.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@Component({
+  selector: 'counter',
+  template: '&lt;h2&gt;&lt;/h2&gt;'
+})
+export class Counter {
+  counter: number = 123;
+  
+  increment() {
+    this.counter++;
+  }
+}
+</code></pre></div></div>
+
+<h3 id="children-in-components-template">
+<a class="anchor" href="#children-in-components-template" aria-hidden="true"><span class="octicon octicon-link"></span></a>Children in component’s template</h3>
+
+<p>There are two places a component can have child elements - template and content. Let’s talk template children first. Observe the following component:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@Component({
+  selector: 'my-app',
+  template: `
+  &lt;my-dialog&gt;
+    &lt;counter&gt;&lt;/counter&gt;
+  &lt;/my-dialog&gt;
+  `
+})
+export class AppComponent { }
+</code></pre></div></div>
+
+<p>Here, both - <code class="language-plaintext highlighter-rouge">my-dialog</code> and <code class="language-plaintext highlighter-rouge">counter</code> are children of <code class="language-plaintext highlighter-rouge">AppComponent</code> in its template. Let’s assume that we have <code class="language-plaintext highlighter-rouge">my-dialog</code> defined for now. If we want to access the <code class="language-plaintext highlighter-rouge">counter</code> here, we’ll use the <code class="language-plaintext highlighter-rouge">@ViewChild</code> decorator as follows:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@Component({
+  selector: 'my-app',
+  template: `
+  &lt;button (click)="counter.increment()"&gt;Increment View Child &lt;/button&gt;
+  &lt;my-dialog&gt;
+    &lt;counter&gt;&lt;/counter&gt;
+  &lt;/my-dialog&gt;
+  `
+})
+export class AppComponent {
+  @ViewChild(Counter) counter: Counter;
+}
+</code></pre></div></div>
+
+<p>We’ve added a button to make it easy to play with this example. The <code class="language-plaintext highlighter-rouge">@ViewChild</code> decorator can take either a type of component or a selector (string) as argument, and returns the first child element from template that matches it. In this case, since we have a <code class="language-plaintext highlighter-rouge">Counter</code> component, we get the reference to actual component object that’s rendered. Clicking the button increases the counter to 124, proving this.</p>
+
+<h3 id="children-in-components-projected-content">
+<a class="anchor" href="#children-in-components-projected-content" aria-hidden="true"><span class="octicon octicon-link"></span></a>Children in component’s projected content</h3>
+
+<p>In the last example, since both - <code class="language-plaintext highlighter-rouge">my-dialog</code> and <code class="language-plaintext highlighter-rouge">counter</code> are present inside the template of <code class="language-plaintext highlighter-rouge">AppComponent</code>, we can access them with <code class="language-plaintext highlighter-rouge">@ViewChildren</code>. However, <code class="language-plaintext highlighter-rouge">counter</code> also seems to be a child of <code class="language-plaintext highlighter-rouge">my-dialog</code>, although not in its own template. Here’s the definition of <code class="language-plaintext highlighter-rouge">MyDialog</code> as we have it for now:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@Component({
+  selector: 'my-dialog',
+  template: `&lt;ng-content&gt;&lt;/ng-content&gt;`
+})
+export class MyDialog { }
+</code></pre></div></div>
+
+<p>All this component does is project the content that was provided as its child. This is referred to as transclusion. That said, there is a way of accessing the children in the projected component - <code class="language-plaintext highlighter-rouge">@ContentChild</code>.</p>
+
+<p>Let’s modify our <code class="language-plaintext highlighter-rouge">MyDialog</code> component a bit. Here’s what the entire code ends up looking like:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@Component({
+  selector: 'my-dialog',
+  template: `
+  &lt;button (click)="counter.increment()"&gt;Increment Content Child &lt;/button&gt;
+  &lt;ng-content&gt;&lt;/ng-content&gt;
+  `
+})
+export class MyDialog {
+  @ContentChild(Counter) counter: Counter;
+}
+
+@Component({
+  selector: 'my-app',
+  template: `
+  &lt;button (click)="counter.increment()"&gt;Increment View Child &lt;/button&gt;
+  &lt;my-dialog&gt;
+    &lt;counter&gt;&lt;/counter&gt;
+  &lt;/my-dialog&gt;
+  `
+})
+export class AppComponent {
+  @ViewChild(Counter) counter: Counter;
+}
+</code></pre></div></div>
+
+<p>Both - <code class="language-plaintext highlighter-rouge">AppComponent</code> and <code class="language-plaintext highlighter-rouge">MyDialog</code> are accessing the same <code class="language-plaintext highlighter-rouge">Counter</code> component. <code class="language-plaintext highlighter-rouge">AppComponent</code> is using <code class="language-plaintext highlighter-rouge">@ViewChild</code> because <code class="language-plaintext highlighter-rouge">&lt;counter&gt;</code> is present inside its template. On the other hand, <code class="language-plaintext highlighter-rouge">MyDialog</code> is using <code class="language-plaintext highlighter-rouge">@ContentChild</code> because <code class="language-plaintext highlighter-rouge">&lt;counter&gt;</code> is a part of its projected content, not the template itself.</p>
+
+<h3 id="matching-more-than-one-child">
+<a class="anchor" href="#matching-more-than-one-child" aria-hidden="true"><span class="octicon octicon-link"></span></a>Matching more than one child</h3>
+
+<p>Both the decorators we saw above have a corresponding list version, which matches all the child elements in its scope (template or projected content). Unsurprisingly, they are named <code class="language-plaintext highlighter-rouge">@ViewChildren</code> and <code class="language-plaintext highlighter-rouge">@ContentChildren</code>. Now that we know the difference in where they look for children, let’s see how we can use <code class="language-plaintext highlighter-rouge">@ViewChildren</code> quickly.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@Component({
+  selector: 'my-app',
+  template: `
+  &lt;button (click)="counter.increment()"&gt;Increment View Child &lt;/button&gt;
+  &lt;my-dialog&gt;
+    &lt;counter&gt;&lt;/counter&gt;
+  &lt;/my-dialog&gt;
+  
+  &lt;counter&gt;&lt;/counter&gt;
+  &lt;counter&gt;&lt;/counter&gt;
+  &lt;counter&gt;&lt;/counter&gt;
+  &lt;counter&gt;&lt;/counter&gt;
+  &lt;button (click)="incrementChildren()"&gt;Increment View Children &lt;/button&gt;
+  
+  `
+})
+export class AppComponent {
+  @ViewChild(Counter) counter: Counter;
+  @ViewChildren(Counter) counters: QueryList&lt;Counter&gt;;
+  
+  incrementChildren() {
+    this.counters.forEach(counter =&gt; {
+      counter.increment();
+    });
+  }
+}
+</code></pre></div></div>
+
+<p>We’ve added a bunch of <code class="language-plaintext highlighter-rouge">&lt;counter&gt;</code> elements and a button to increment all of them to our template. To support that, we’ve added <code class="language-plaintext highlighter-rouge">@ViewChildren</code> decorator to capture all the <code class="language-plaintext highlighter-rouge">counter</code> children. It’s important to note that <code class="language-plaintext highlighter-rouge">@ViewChildren</code> and <code class="language-plaintext highlighter-rouge">@ContentChildren</code> do not return an array. They return a <code class="language-plaintext highlighter-rouge">QueryList</code>, which is an array like object. It is an iterable, which means we can use that with <code class="language-plaintext highlighter-rouge">ngFor</code>, and has common array methods like <code class="language-plaintext highlighter-rouge">forEach</code> which we’ve made use of. The QueryList automatically tracks addition and removal of any children.</p>
+
+<p>Here’s the <a href="http://embed.plnkr.co/YymATt865X0c7FhqYnRx/">finished live plunk</a> of this.</p>
+
+<p>In the plunk, notice that clicking on the button to increment view children increments all the counters, including the one we’ve matched with @ViewChild and @ContentChild. Clicking on the corresponding button to increment content and view child continues to increment only the one counter that is matched.
+When a child can be of more than one type
+Consider the following bit of code:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@Directive({
+  selector: '[highlight]'
+})
+export class Highlight {
+  constructor(private el: ElementRef) { }
+  
+  changeColor() {
+    this.el.nativeElement.style.color = 'red';
+  }
+}
+
+@Component({
+  selector: 'my-app',
+  template: `
+  &lt;counter highlight&gt;&lt;/counter&gt;
+  &lt;button (click)="counter.increment()"&gt;Increment View Child&lt;/button&gt;
+  `
+})
+export class AppComponent {
+  @ViewChild(Counter) counter: Counter;
+}
+</code></pre></div></div>
+
+<p>What if we wanted to match the <code class="language-plaintext highlighter-rouge">&lt;counter&gt;</code> child, but instead of getting the component object back, needed a reference to the attached directive object? In other words, how can we access the <code class="language-plaintext highlighter-rouge">changeColor</code> method on our view child?</p>
+
+<p>Fortunately, there’s an easy way to do so. But before we get into that, we need to understand how angular decides what to return to us when it sees a  <code class="language-plaintext highlighter-rouge">@ViewChild</code> decorator. Up till now, we were getting the component object, which allowed us to interact with component’s methods directly. However, that’s not the end of it. For angular, there can be multiple ways to interpret view-child. It is first and foremost a DOM element. It may also correspond to an angular component. Further, it may also have directives or services attached to it. We can help by telling explicitly what we want.</p>
+
+<p>Turns out, in addition to providing the type/selector of child to match against, we can also provide instructions of interpreting the child object via <code class="language-plaintext highlighter-rouge">read</code> property. Our decorator will change thus:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@ViewChild(Counter, {read: Highlight}) counter: Highlight;
+</code></pre></div></div>
+
+<p>Now, <code class="language-plaintext highlighter-rouge">counter.increment()</code> will result in error, because <code class="language-plaintext highlighter-rouge">counter</code> is no longer a component object. Instead, it represents the directive object, which means <code class="language-plaintext highlighter-rouge">counter.changeColor()</code> is the new black.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@Component({
+  selector: 'my-app',
+  template: `
+  &lt;counter highlight&gt;&lt;/counter&gt;
+  &lt;button (click)="counter.increment()"&gt;Increment View Child&lt;/button&gt;
+  &lt;button (click)="highlight.changeColor()"&gt;Color View Child&lt;/button&gt;
+  `
+})
+export class AppComponent {
+  @ViewChild(Counter) counter: Counter;
+  @ViewChild(Counter, {read: Highlight}) highlight: Highlight;
+}
+</code></pre></div></div>
+
+<p>Note that although both the <code class="language-plaintext highlighter-rouge">@ViewChild</code> decorators return references to different types of things, in the end, it is all affecting the same element. By specifying the type of reference we want, we can easily switch between our interpretations of an element.</p>
+
+<p><a href="http://embed.plnkr.co/UTcnkOWFwO21qYwMZ2jB/">The finished plunk</a> contains another interpretation we can use - as a DOM element - and accesses the native element directly.</p>
+
+<h3 id="summing-up">
+<a class="anchor" href="#summing-up" aria-hidden="true"><span class="octicon octicon-link"></span></a>Summing up</h3>
+
+<p>We saw how we can access child elements using different decorators that angular provides, depending on where those elements might occur. We also learned how we can specify the type of child element directly, and interpret same element in different ways. This opens up new ways of interaction between components in complex scenarios when communication through input/output might not be the best (or practical) approach.</p>
+
+  </div><a class="u-url" href="/2017/10/03/childelements-in-angular.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Lessons and ramblings. Thoughts and speculations. Opinions are my own.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/akagr" title="akagr"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/akshagrwl" title="akshagrwl"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
