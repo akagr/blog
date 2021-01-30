@@ -8,15 +8,15 @@
 <meta name="generator" content="Jekyll v4.1.1" />
 <meta property="og:title" content="Haskell Diary 1 - Recursion" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Haskell is the first pure functional programming language that I have had a serious contact with. I’m very much a noob right now but I’ve found that there’s a lot of gold to be found right from day 1 in functional world. So I’ve thought about documenting things which I found really cool, mind bending or which simply took a long time for me to wrap my head around (still, cool)." />
-<meta property="og:description" content="Haskell is the first pure functional programming language that I have had a serious contact with. I’m very much a noob right now but I’ve found that there’s a lot of gold to be found right from day 1 in functional world. So I’ve thought about documenting things which I found really cool, mind bending or which simply took a long time for me to wrap my head around (still, cool)." />
+<meta name="description" content="See how lazy loading in Haskell makes some very clever code possible" />
+<meta property="og:description" content="See how lazy loading in Haskell makes some very clever code possible" />
 <link rel="canonical" href="https://akagr.github.io/2016/01/31/haskell-diary-1-recursion.html" />
 <meta property="og:url" content="https://akagr.github.io/2016/01/31/haskell-diary-1-recursion.html" />
 <meta property="og:site_name" content="Akash Agrawal" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2016-01-31T00:00:00-06:00" />
 <script type="application/ld+json">
-{"url":"https://akagr.github.io/2016/01/31/haskell-diary-1-recursion.html","@type":"BlogPosting","headline":"Haskell Diary 1 - Recursion","dateModified":"2016-01-31T00:00:00-06:00","datePublished":"2016-01-31T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://akagr.github.io/2016/01/31/haskell-diary-1-recursion.html"},"description":"Haskell is the first pure functional programming language that I have had a serious contact with. I’m very much a noob right now but I’ve found that there’s a lot of gold to be found right from day 1 in functional world. So I’ve thought about documenting things which I found really cool, mind bending or which simply took a long time for me to wrap my head around (still, cool).","@context":"https://schema.org"}</script>
+{"url":"https://akagr.github.io/2016/01/31/haskell-diary-1-recursion.html","@type":"BlogPosting","headline":"Haskell Diary 1 - Recursion","dateModified":"2016-01-31T00:00:00-06:00","datePublished":"2016-01-31T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://akagr.github.io/2016/01/31/haskell-diary-1-recursion.html"},"description":"See how lazy loading in Haskell makes some very clever code possible","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://akagr.github.io/feed.xml" title="Akash Agrawal" /><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
@@ -71,7 +71,7 @@ window.onload = wrap_img;
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">Haskell Diary 1 - Recursion</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2016-01-31T00:00:00-06:00" itemprop="datePublished">
+    <h1 class="post-title p-name" itemprop="name headline">Haskell Diary 1 - Recursion</h1><p class="page-description">See how lazy loading in Haskell makes some very clever code possible</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2016-01-31T00:00:00-06:00" itemprop="datePublished">
         Jan 31, 2016
       </time>
        • <span class="read-time" title="Estimated read time">
@@ -86,8 +86,7 @@ window.onload = wrap_img;
     </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <ul class="section-nav">
-</ul><p>Haskell is the first pure functional programming language that I have had a serious contact with. I’m very much a noob right now but I’ve found that there’s a lot of gold to be found right from day 1 in functional world. So I’ve thought about documenting things which I found really cool, mind bending or which simply took a long time for me to wrap my head around (still, cool).</p>
+    <p>Haskell is the first pure functional programming language that I have had a serious contact with. I’m very much a noob right now but I’ve found that there’s a lot of gold to be found right from day 1 in functional world. So I’ve thought about documenting things which I found really cool, mind bending or which simply took a long time for me to wrap my head around (still, cool).</p>
 
 <p>So… recursion.</p>
 
@@ -117,7 +116,7 @@ window.onload = wrap_img;
 
 <div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- tail takes a list and gives it back after removing its first element</span>
 <span class="n">tail</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span> <span class="c1">-- &gt; [2, 3, 4, 5]</span>
-<span class="n">tail</span> <span class="s">"haskell diary"</span> <span class="c1">-- &gt; "askell diary" </span>
+<span class="n">tail</span> <span class="s">"haskell diary"</span> <span class="c1">-- &gt; "askell diary"</span>
 
 <span class="c1">-- zipWith takes a function and two lists and return the</span>
 <span class="c1">-- result of applying that function on corresponding elements</span>

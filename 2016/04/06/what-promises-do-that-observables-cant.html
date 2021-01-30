@@ -8,15 +8,15 @@
 <meta name="generator" content="Jekyll v4.1.1" />
 <meta property="og:title" content="What Promises Do That Observables Can’t" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Note: This is a cross-post of an article I authored. The original was published at Modus Create, Inc. on April 06, 2016." />
-<meta property="og:description" content="Note: This is a cross-post of an article I authored. The original was published at Modus Create, Inc. on April 06, 2016." />
+<meta name="description" content="Find out how to build cancellable async calls with observables" />
+<meta property="og:description" content="Find out how to build cancellable async calls with observables" />
 <link rel="canonical" href="https://akagr.github.io/2016/04/06/what-promises-do-that-observables-cant.html" />
 <meta property="og:url" content="https://akagr.github.io/2016/04/06/what-promises-do-that-observables-cant.html" />
 <meta property="og:site_name" content="Akash Agrawal" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2016-04-06T00:00:00-05:00" />
 <script type="application/ld+json">
-{"url":"https://akagr.github.io/2016/04/06/what-promises-do-that-observables-cant.html","@type":"BlogPosting","headline":"What Promises Do That Observables Can’t","dateModified":"2016-04-06T00:00:00-05:00","datePublished":"2016-04-06T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://akagr.github.io/2016/04/06/what-promises-do-that-observables-cant.html"},"description":"Note: This is a cross-post of an article I authored. The original was published at Modus Create, Inc. on April 06, 2016.","@context":"https://schema.org"}</script>
+{"url":"https://akagr.github.io/2016/04/06/what-promises-do-that-observables-cant.html","@type":"BlogPosting","headline":"What Promises Do That Observables Can’t","dateModified":"2016-04-06T00:00:00-05:00","datePublished":"2016-04-06T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://akagr.github.io/2016/04/06/what-promises-do-that-observables-cant.html"},"description":"Find out how to build cancellable async calls with observables","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://akagr.github.io/feed.xml" title="Akash Agrawal" /><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
@@ -71,7 +71,7 @@ window.onload = wrap_img;
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">What Promises Do That Observables Can’t</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2016-04-06T00:00:00-05:00" itemprop="datePublished">
+    <h1 class="post-title p-name" itemprop="name headline">What Promises Do That Observables Can’t</h1><p class="page-description">Find out how to build cancellable async calls with observables</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2016-04-06T00:00:00-05:00" itemprop="datePublished">
         Apr 6, 2016
       </time>
        • <span class="read-time" title="Estimated read time">
@@ -86,18 +86,13 @@ window.onload = wrap_img;
     </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <ul class="section-nav">
-<li class="toc-entry toc-h3"><a href="#promises-and-observables">Promises and Observables</a></li>
-<li class="toc-entry toc-h3"><a href="#observables-in-angular-2">Observables in Angular 2</a></li>
-<li class="toc-entry toc-h3"><a href="#conclusion">Conclusion</a></li>
-</ul><p><em>Note: This is a cross-post of an article I authored. The original was published at <a href="http://moduscreate.com/observables-and-promises/">Modus Create, Inc.</a> on April 06, 2016.</em></p>
+    <p><em>Note: This is a cross-post of an article I authored. The original was published at <a href="http://moduscreate.com/observables-and-promises/">Modus Create, Inc.</a> on April 06, 2016.</em></p>
 
 <p><strong>Nothing.</strong></p>
 
 <p>Observables are grabbing the spotlight as one of the cool new things Angular 2 is doing, despite having been around for some time. They are positioned to fully eclipse promises as the goto abstraction for dealing with async, among other things. Let’s dive into what Observables are and how they compare against promises in dealing with async data.</p>
 
-<h3 id="promises-and-observables">
-<a class="anchor" href="#promises-and-observables" aria-hidden="true"><span class="octicon octicon-link"></span></a>Promises and Observables</h3>
+<h3 id="promises-and-observables">Promises and Observables</h3>
 
 <p>Promises are great. They were designed to be an answer to callback hell. Javascript’s tendency to keep edging to the right of the screen due to nesting has made many eyes bleed and brains explode. In comparison, the <code class="language-plaintext highlighter-rouge">do this then this then that</code> approach of promises was not only prettier and easier to read, it also provided a standard which could be embraced by developers to communicate with. Promises soon became the de-facto approach in most major frameworks and libraries. So much so in fact that the ES2015 specification incorporated promises as a core javascript API sans any third party library.</p>
 
@@ -147,17 +142,16 @@ window.onload = wrap_img;
 
 <p>This is just the tip of the iceberg. Check out <a href="https://github.com/Reactive-Extensions/RxJS/blob/master/doc/api/core/observable.md">their repo</a> for all operators available out of the box.</p>
 
-<h3 id="observables-in-angular-2">
-<a class="anchor" href="#observables-in-angular-2" aria-hidden="true"><span class="octicon octicon-link"></span></a>Observables in Angular 2</h3>
+<h3 id="observables-in-angular-2">Observables in Angular 2</h3>
 
 <p>Angular 2 uses Rx.js Observables instead of promises for dealing with HTTP. This means, as we saw in the examples above, they come with some serious batteries included. That’s one of the reasons that HTTP operations in Angular 2 is so amazing. Here’s some code which consumes a quotes API via HTTP get. The result is an observable.</p>
 
 <div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">export</span> <span class="kd">class</span> <span class="nx">App</span> <span class="p">{</span>
   <span class="nl">qlist</span><span class="p">:</span> <span class="nb">String</span><span class="p">[]</span> <span class="o">=</span> <span class="p">[];</span>
-  
+
   <span class="kd">constructor</span> <span class="p">(</span><span class="kr">public</span> <span class="nx">http</span><span class="p">:</span> <span class="nx">Http</span><span class="p">)</span> <span class="p">{</span>
   <span class="p">}</span>
-  
+
   <span class="nx">getQuote</span> <span class="p">()</span> <span class="p">{</span>
     <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">http</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">http://quotesondesign.com/wp-json/posts?filter[orderby]=rand&amp;filter[posts_per_page]=1</span><span class="dl">'</span><span class="p">);</span>
   <span class="p">}</span>
@@ -188,8 +182,7 @@ window.onload = wrap_img;
 
 <p>The above example could be found in action at <a href="http://plnkr.co/edit/XiMzik?p=preview">this plunk</a>.</p>
 
-<h3 id="conclusion">
-<a class="anchor" href="#conclusion" aria-hidden="true"><span class="octicon octicon-link"></span></a>Conclusion</h3>
+<h3 id="conclusion">Conclusion</h3>
 
 <p>Observables are powerful. And we’ve barely scratched the surface. They’re one of the proposed standards in ES2016. Looks like popular libraries are ending up in language specification these days :)</p>
 

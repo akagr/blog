@@ -8,15 +8,15 @@
 <meta name="generator" content="Jekyll v4.1.1" />
 <meta property="og:title" content="Haskell Diary 2 - Algebra of Data Types" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="In every single Haskell guide I’ve been through, the term Algebraic Data Types is mentioned at least once. In most cases, the text simply moved on to how types are defined and used. A small minority actually tries to explain why Haskell’s data types are called Algebraic. An even smaller minority succeeded in getting the point across. Here’s me documenting what I’ve learned so far about them. Hopefully it’d be of some help for future Haskell learners." />
-<meta property="og:description" content="In every single Haskell guide I’ve been through, the term Algebraic Data Types is mentioned at least once. In most cases, the text simply moved on to how types are defined and used. A small minority actually tries to explain why Haskell’s data types are called Algebraic. An even smaller minority succeeded in getting the point across. Here’s me documenting what I’ve learned so far about them. Hopefully it’d be of some help for future Haskell learners." />
+<meta name="description" content="Theoretical analysis of what data types represent and how they behave" />
+<meta property="og:description" content="Theoretical analysis of what data types represent and how they behave" />
 <link rel="canonical" href="https://akagr.github.io/2016/04/10/haskell-diary-2-algebraic-data-types.html" />
 <meta property="og:url" content="https://akagr.github.io/2016/04/10/haskell-diary-2-algebraic-data-types.html" />
 <meta property="og:site_name" content="Akash Agrawal" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2016-04-10T00:00:00-05:00" />
 <script type="application/ld+json">
-{"url":"https://akagr.github.io/2016/04/10/haskell-diary-2-algebraic-data-types.html","@type":"BlogPosting","headline":"Haskell Diary 2 - Algebra of Data Types","dateModified":"2016-04-10T00:00:00-05:00","datePublished":"2016-04-10T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://akagr.github.io/2016/04/10/haskell-diary-2-algebraic-data-types.html"},"description":"In every single Haskell guide I’ve been through, the term Algebraic Data Types is mentioned at least once. In most cases, the text simply moved on to how types are defined and used. A small minority actually tries to explain why Haskell’s data types are called Algebraic. An even smaller minority succeeded in getting the point across. Here’s me documenting what I’ve learned so far about them. Hopefully it’d be of some help for future Haskell learners.","@context":"https://schema.org"}</script>
+{"url":"https://akagr.github.io/2016/04/10/haskell-diary-2-algebraic-data-types.html","@type":"BlogPosting","headline":"Haskell Diary 2 - Algebra of Data Types","dateModified":"2016-04-10T00:00:00-05:00","datePublished":"2016-04-10T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://akagr.github.io/2016/04/10/haskell-diary-2-algebraic-data-types.html"},"description":"Theoretical analysis of what data types represent and how they behave","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://akagr.github.io/feed.xml" title="Akash Agrawal" /><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
@@ -71,7 +71,7 @@ window.onload = wrap_img;
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">Haskell Diary 2 - Algebra of Data Types</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2016-04-10T00:00:00-05:00" itemprop="datePublished">
+    <h1 class="post-title p-name" itemprop="name headline">Haskell Diary 2 - Algebra of Data Types</h1><p class="page-description">Theoretical analysis of what data types represent and how they behave</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2016-04-10T00:00:00-05:00" itemprop="datePublished">
         Apr 10, 2016
       </time>
        • <span class="read-time" title="Estimated read time">
@@ -86,17 +86,9 @@ window.onload = wrap_img;
     </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <ul class="section-nav">
-<li class="toc-entry toc-h3"><a href="#some-background-first">Some background first</a></li>
-<li class="toc-entry toc-h3"><a href="#sum">Sum</a></li>
-<li class="toc-entry toc-h3"><a href="#product">Product</a></li>
-<li class="toc-entry toc-h3"><a href="#data-types-follow-algebraic-laws">Data types follow algebraic laws</a></li>
-<li class="toc-entry toc-h3"><a href="#exponents">Exponents</a></li>
-<li class="toc-entry toc-h3"><a href="#conclusion">Conclusion</a></li>
-</ul><p>In every single Haskell guide I’ve been through, the term <strong>Algebraic Data Types</strong> is mentioned at least once. In most cases, the text simply moved on to how types are defined and used. A small minority actually tries to explain why Haskell’s data types are called <code class="language-plaintext highlighter-rouge">Algebraic</code>. An even smaller minority succeeded in getting the point across. Here’s me documenting what I’ve learned so far about them. Hopefully it’d be of some help for future Haskell learners.</p>
+    <p>In every single Haskell guide I’ve been through, the term <strong>Algebraic Data Types</strong> is mentioned at least once. In most cases, the text simply moved on to how types are defined and used. A small minority actually tries to explain why Haskell’s data types are called <code class="language-plaintext highlighter-rouge">Algebraic</code>. An even smaller minority succeeded in getting the point across. Here’s me documenting what I’ve learned so far about them. Hopefully it’d be of some help for future Haskell learners.</p>
 
-<h3 id="some-background-first">
-<a class="anchor" href="#some-background-first" aria-hidden="true"><span class="octicon octicon-link"></span></a>Some background first</h3>
+<h3 id="some-background-first">Some background first</h3>
 
 <p><code class="language-plaintext highlighter-rouge">Bool</code> is one of the simplest data type in Haskell. Its defined as:</p>
 
@@ -120,8 +112,7 @@ window.onload = wrap_img;
 
 <p>This is something to keep in mind going forward. A data type can be associated to a number based on how many values an expression of that type can possibly evaluate to. Also, it is totally legit for a type to have infinite possible values (think <code class="language-plaintext highlighter-rouge">String</code>).</p>
 
-<h3 id="sum">
-<a class="anchor" href="#sum" aria-hidden="true"><span class="octicon octicon-link"></span></a>Sum</h3>
+<h3 id="sum">Sum</h3>
 <p>Now we can get to the <strong>Algebra</strong> part. Here’s the all-too-familiar definition of <code class="language-plaintext highlighter-rouge">Maybe</code>.</p>
 
 <div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kr">data</span> <span class="kt">Maybe</span> <span class="n">a</span> <span class="o">=</span> <span class="kt">Just</span> <span class="n">a</span> <span class="o">|</span> <span class="kt">Nothing</span>
@@ -170,8 +161,7 @@ window.onload = wrap_img;
 
 <p>That’s 2 + 7 = 9 possible values in total.</p>
 
-<h3 id="product">
-<a class="anchor" href="#product" aria-hidden="true"><span class="octicon octicon-link"></span></a>Product</h3>
+<h3 id="product">Product</h3>
 <p>Like the sum, data types can also be defined as products of other data types. Here’s a quick example using a custom data type.</p>
 
 <div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kr">data</span> <span class="kt">Tuple</span> <span class="n">a</span> <span class="n">b</span> <span class="o">=</span> <span class="kt">Tuple</span> <span class="n">a</span> <span class="n">b</span>
@@ -213,8 +203,7 @@ window.onload = wrap_img;
 
 <p>While <code class="language-plaintext highlighter-rouge">|</code> acts like sum, specifying data types as composites is similarly equivalent to multiplication. <code class="language-plaintext highlighter-rouge">Tuple Weekday Weekday</code> will give 49 possible values. Because <code class="language-plaintext highlighter-rouge">Weekday * Weekday</code> or <code class="language-plaintext highlighter-rouge">7 * 7</code>.</p>
 
-<h3 id="data-types-follow-algebraic-laws">
-<a class="anchor" href="#data-types-follow-algebraic-laws" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data types follow algebraic laws</h3>
+<h3 id="data-types-follow-algebraic-laws">Data types follow algebraic laws</h3>
 
 <p>We can check this real quick by seeing how they follow distribution. For a refresher, distributive law is defined as</p>
 
@@ -289,8 +278,7 @@ window.onload = wrap_img;
 
 <p>Hence Proved! I always loved writing this :)</p>
 
-<h3 id="exponents">
-<a class="anchor" href="#exponents" aria-hidden="true"><span class="octicon octicon-link"></span></a>Exponents</h3>
+<h3 id="exponents">Exponents</h3>
 
 <p>Sum and product aren’t the only operations out there. One of the most common data types in Haskell is actually exponential. We know them as <code class="language-plaintext highlighter-rouge">(-&gt;)</code> or more generally as functions.
 This is a lot bigger topic but I will quickly list out how to visualise them.</p>
@@ -314,8 +302,7 @@ So I’m gonna believe in reader and leave them to write all the possible defini
 
 <p>To formalise it, a function <code class="language-plaintext highlighter-rouge">a -&gt; b</code> corresponds to algebraic operation <code class="language-plaintext highlighter-rouge">b ^ a</code>.</p>
 
-<h3 id="conclusion">
-<a class="anchor" href="#conclusion" aria-hidden="true"><span class="octicon octicon-link"></span></a>Conclusion</h3>
+<h3 id="conclusion">Conclusion</h3>
 
 <p>I wrote this post for a select species of programmers who like to know what they’re playing with with usability of that knowledge being non-consequential. I think that in general course of things, all the text above is not super handy and will probably not help someone write that awesome web server or parser. So, sincere apologies if I wasted your time.</p>
 

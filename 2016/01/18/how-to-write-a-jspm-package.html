@@ -8,15 +8,15 @@
 <meta name="generator" content="Jekyll v4.1.1" />
 <meta property="og:title" content="How to write a JSPM package" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Why" />
-<meta property="og:description" content="Why" />
+<meta name="description" content="Learn how to create a jspm package from scratch" />
+<meta property="og:description" content="Learn how to create a jspm package from scratch" />
 <link rel="canonical" href="https://akagr.github.io/2016/01/18/how-to-write-a-jspm-package.html" />
 <meta property="og:url" content="https://akagr.github.io/2016/01/18/how-to-write-a-jspm-package.html" />
 <meta property="og:site_name" content="Akash Agrawal" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2016-01-18T00:00:00-06:00" />
 <script type="application/ld+json">
-{"url":"https://akagr.github.io/2016/01/18/how-to-write-a-jspm-package.html","@type":"BlogPosting","headline":"How to write a JSPM package","dateModified":"2016-01-18T00:00:00-06:00","datePublished":"2016-01-18T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://akagr.github.io/2016/01/18/how-to-write-a-jspm-package.html"},"description":"Why","@context":"https://schema.org"}</script>
+{"url":"https://akagr.github.io/2016/01/18/how-to-write-a-jspm-package.html","@type":"BlogPosting","headline":"How to write a JSPM package","dateModified":"2016-01-18T00:00:00-06:00","datePublished":"2016-01-18T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://akagr.github.io/2016/01/18/how-to-write-a-jspm-package.html"},"description":"Learn how to create a jspm package from scratch","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://akagr.github.io/feed.xml" title="Akash Agrawal" /><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
@@ -71,7 +71,7 @@ window.onload = wrap_img;
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">How to write a JSPM package</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2016-01-18T00:00:00-06:00" itemprop="datePublished">
+    <h1 class="post-title p-name" itemprop="name headline">How to write a JSPM package</h1><p class="page-description">Learn how to create a jspm package from scratch</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2016-01-18T00:00:00-06:00" itemprop="datePublished">
         Jan 18, 2016
       </time>
        • <span class="read-time" title="Estimated read time">
@@ -86,12 +86,7 @@ window.onload = wrap_img;
     </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <ul class="section-nav">
-<li class="toc-entry toc-h2"><a href="#why">Why</a></li>
-<li class="toc-entry toc-h2"><a href="#how">How</a></li>
-<li class="toc-entry toc-h2"><a href="#on">On</a></li>
-</ul><h2 id="why">
-<a class="anchor" href="#why" aria-hidden="true"><span class="octicon octicon-link"></span></a>Why</h2>
+    <h2 id="why">Why</h2>
 
 <p>So I was assigned with building payment capabilities in my project at work and we decided to go with stripe. If you haven’t heard of it, it’s an awesome and developer friendly (looking at you, paypal!) payment gate which powers many cool web apps like shopify, kickstarter etc.</p>
 
@@ -106,14 +101,12 @@ window.onload = wrap_img;
 
 <ol>
   <li>I had to create that folder just for stripe. This being an angular application, all of the internal libraries were written as services and <code class="language-plaintext highlighter-rouge">stripe.js</code> wouldn’t have fit in with them too well.</li>
-  <li>
-<code class="language-plaintext highlighter-rouge">stripe.js</code> is very much an external dependency and should go with other external dependencies in <code class="language-plaintext highlighter-rouge">package.json</code>.</li>
+  <li><code class="language-plaintext highlighter-rouge">stripe.js</code> is very much an external dependency and should go with other external dependencies in <code class="language-plaintext highlighter-rouge">package.json</code>.</li>
 </ol>
 
 <p>In case you’ve not already guessed it, I decided to create a jspm package for stripe.js and import that into project through cli like any other dependency. I was surprised to see how little there is on the web to tell me how to do this. This post is aimed to remedy some of that.</p>
 
-<h2 id="how">
-<a class="anchor" href="#how" aria-hidden="true"><span class="octicon octicon-link"></span></a>How</h2>
+<h2 id="how">How</h2>
 
 <p>I created a directory for this package (outside of project obviously) and initialised JSPM in it.</p>
 
@@ -165,13 +158,11 @@ jspm init <span class="nt">-y</span>
 
 <p>Here’s the finished thing: <a href="https://github.com/akagr/stripe-jspm">akagr/stripe-jspm</a></p>
 
-<h2 id="on">
-<a class="anchor" href="#on" aria-hidden="true"><span class="octicon octicon-link"></span></a>On</h2>
+<h2 id="on">On</h2>
 
 <p>This package has some room for improvements. For example, we can probably remove <code class="language-plaintext highlighter-rouge">traceur</code> as a dev dependency since we’re not really using it in this package. And since it’s written in ES5 and earlier stuff, we’re not going to need it either.</p>
 
 <p>This was my first time writing a package for jspm and I liked how I was able to do that and import it within a few minutes. Any suggestions for improvements to package or this post will be much appreciated. Feel free to shoot comments over at <a href="https://www.reddit.com/r/javascript/comments/41iuaq/how_to_write_a_jspm_package/">reddit</a>.</p>
-
 
   </div><a class="u-url" href="/2016/01/18/how-to-write-a-jspm-package.html" hidden></a>
 </article>

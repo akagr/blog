@@ -8,15 +8,15 @@
 <meta name="generator" content="Jekyll v4.1.1" />
 <meta property="og:title" content="Cleaning merged Git branches" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Doing some git house cleaning is something that gets neglected more often than not. With zero-cost branches in git (unlike svn), most developers creates zillions of branches during the course of their projects. Most git workflows see creation of every unit of work being put under its own branch. This means individual branches for features, bug fixes, hot fixes etc." />
-<meta property="og:description" content="Doing some git house cleaning is something that gets neglected more often than not. With zero-cost branches in git (unlike svn), most developers creates zillions of branches during the course of their projects. Most git workflows see creation of every unit of work being put under its own branch. This means individual branches for features, bug fixes, hot fixes etc." />
+<meta name="description" content="How to clean git branches which aren’t active anymore" />
+<meta property="og:description" content="How to clean git branches which aren’t active anymore" />
 <link rel="canonical" href="https://akagr.github.io/2017/10/03/cleaning-git-branches.html" />
 <meta property="og:url" content="https://akagr.github.io/2017/10/03/cleaning-git-branches.html" />
 <meta property="og:site_name" content="Akash Agrawal" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2017-10-03T00:00:00-05:00" />
 <script type="application/ld+json">
-{"url":"https://akagr.github.io/2017/10/03/cleaning-git-branches.html","@type":"BlogPosting","headline":"Cleaning merged Git branches","dateModified":"2017-10-03T00:00:00-05:00","datePublished":"2017-10-03T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://akagr.github.io/2017/10/03/cleaning-git-branches.html"},"description":"Doing some git house cleaning is something that gets neglected more often than not. With zero-cost branches in git (unlike svn), most developers creates zillions of branches during the course of their projects. Most git workflows see creation of every unit of work being put under its own branch. This means individual branches for features, bug fixes, hot fixes etc.","@context":"https://schema.org"}</script>
+{"url":"https://akagr.github.io/2017/10/03/cleaning-git-branches.html","@type":"BlogPosting","headline":"Cleaning merged Git branches","dateModified":"2017-10-03T00:00:00-05:00","datePublished":"2017-10-03T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://akagr.github.io/2017/10/03/cleaning-git-branches.html"},"description":"How to clean git branches which aren’t active anymore","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://akagr.github.io/feed.xml" title="Akash Agrawal" /><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
@@ -71,7 +71,7 @@ window.onload = wrap_img;
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">Cleaning merged Git branches</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2017-10-03T00:00:00-05:00" itemprop="datePublished">
+    <h1 class="post-title p-name" itemprop="name headline">Cleaning merged Git branches</h1><p class="page-description">How to clean git branches which aren't active anymore</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2017-10-03T00:00:00-05:00" itemprop="datePublished">
         Oct 3, 2017
       </time>
        • <span class="read-time" title="Estimated read time">
@@ -86,17 +86,13 @@ window.onload = wrap_img;
     </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <ul class="section-nav">
-<li class="toc-entry toc-h2"><a href="#finding-all-the-merged-branches">Finding all the merged branches</a></li>
-<li class="toc-entry toc-h2"><a href="#deleting-all-the-merged-branches">Deleting all the merged branches</a></li>
-</ul><p>Doing some git house cleaning is something that gets neglected more often than not. With zero-cost branches in git (unlike svn), most developers creates zillions of branches during the course of their projects. Most git workflows see creation of every unit of work being put under its own branch. This means individual branches for features, bug fixes, hot fixes etc.</p>
+    <p>Doing some git house cleaning is something that gets neglected more often than not. With zero-cost branches in git (unlike svn), most developers creates zillions of branches during the course of their projects. Most git workflows see creation of every unit of work being put under its own branch. This means individual branches for features, bug fixes, hot fixes etc.</p>
 
 <p>It’s very desirable to keep our git repos clean of branches that are no longer useful/relevant. Have too many unnecessary branches also pollutes git logs since it’s more difficult to locate a particular branch’s head when there are hundreds of those.</p>
 
 <p>Here are a couple of really quick shell commands to tame this situation</p>
 
-<h2 id="finding-all-the-merged-branches">
-<a class="anchor" href="#finding-all-the-merged-branches" aria-hidden="true"><span class="octicon octicon-link"></span></a>Finding all the merged branches</h2>
+<h2 id="finding-all-the-merged-branches">Finding all the merged branches</h2>
 
 <p>First, we switch to <code class="language-plaintext highlighter-rouge">master</code> and bring in all the updates. This is <strong>important</strong> if we don’t want to lose branches that haven’t yet been merged to <code class="language-plaintext highlighter-rouge">master</code>.</p>
 
@@ -120,8 +116,7 @@ git branch <span class="nt">-r</span> <span class="nt">--merged</span> | <span c
 
 <p>The resulting lists of branches will be our candidates for deletion.</p>
 
-<h2 id="deleting-all-the-merged-branches">
-<a class="anchor" href="#deleting-all-the-merged-branches" aria-hidden="true"><span class="octicon octicon-link"></span></a>Deleting all the merged branches</h2>
+<h2 id="deleting-all-the-merged-branches">Deleting all the merged branches</h2>
 
 <p>Now that we know what to delete:</p>
 

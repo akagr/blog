@@ -8,15 +8,15 @@
 <meta name="generator" content="Jekyll v4.1.1" />
 <meta property="og:title" content="Beginner’s guide to Megaparsec" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="What is Megaparsec?" />
-<meta property="og:description" content="What is Megaparsec?" />
+<meta name="description" content="Explore how to build a simple markdown parser with Haskell and megaparsec" />
+<meta property="og:description" content="Explore how to build a simple markdown parser with Haskell and megaparsec" />
 <link rel="canonical" href="https://akagr.github.io/2017/01/19/beginners-guide-to-megaparsec.html" />
 <meta property="og:url" content="https://akagr.github.io/2017/01/19/beginners-guide-to-megaparsec.html" />
 <meta property="og:site_name" content="Akash Agrawal" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2017-01-19T00:00:00-06:00" />
 <script type="application/ld+json">
-{"url":"https://akagr.github.io/2017/01/19/beginners-guide-to-megaparsec.html","@type":"BlogPosting","headline":"Beginner’s guide to Megaparsec","dateModified":"2017-01-19T00:00:00-06:00","datePublished":"2017-01-19T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://akagr.github.io/2017/01/19/beginners-guide-to-megaparsec.html"},"description":"What is Megaparsec?","@context":"https://schema.org"}</script>
+{"url":"https://akagr.github.io/2017/01/19/beginners-guide-to-megaparsec.html","@type":"BlogPosting","headline":"Beginner’s guide to Megaparsec","dateModified":"2017-01-19T00:00:00-06:00","datePublished":"2017-01-19T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://akagr.github.io/2017/01/19/beginners-guide-to-megaparsec.html"},"description":"Explore how to build a simple markdown parser with Haskell and megaparsec","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://akagr.github.io/feed.xml" title="Akash Agrawal" /><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
@@ -71,7 +71,7 @@ window.onload = wrap_img;
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">Beginner&#39;s guide to Megaparsec</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2017-01-19T00:00:00-06:00" itemprop="datePublished">
+    <h1 class="post-title p-name" itemprop="name headline">Beginner&#39;s guide to Megaparsec</h1><p class="page-description">Explore how to build a simple markdown parser with Haskell and megaparsec</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2017-01-19T00:00:00-06:00" itemprop="datePublished">
         Jan 19, 2017
       </time>
        • <span class="read-time" title="Estimated read time">
@@ -86,18 +86,7 @@ window.onload = wrap_img;
     </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <ul class="section-nav">
-<li class="toc-entry toc-h3"><a href="#what-is-megaparsec">What is Megaparsec?</a></li>
-<li class="toc-entry toc-h3"><a href="#environment-and-setup">Environment and Setup</a></li>
-<li class="toc-entry toc-h3"><a href="#parsing-a-single-letter">Parsing a single letter</a></li>
-<li class="toc-entry toc-h3"><a href="#how-parsing-works">How parsing works</a></li>
-<li class="toc-entry toc-h3"><a href="#parsing-this-or-that">Parsing this OR that</a></li>
-<li class="toc-entry toc-h3"><a href="#parsing-this-and-that">Parsing this AND that</a></li>
-<li class="toc-entry toc-h3"><a href="#combinators">Combinators</a></li>
-<li class="toc-entry toc-h3"><a href="#transforming-parsed-strings">Transforming parsed strings</a></li>
-<li class="toc-entry toc-h3"><a href="#conclusion">Conclusion</a></li>
-</ul><h3 id="what-is-megaparsec">
-<a class="anchor" href="#what-is-megaparsec" aria-hidden="true"><span class="octicon octicon-link"></span></a>What is Megaparsec?</h3>
+    <h3 id="what-is-megaparsec">What is Megaparsec?</h3>
 
 <p><a href="https://hackage.haskell.org/package/megaparsec">Megaparsec</a> is a parsing library written in Haskell. It’s a fork of the popular <a href="https://hackage.haskell.org/package/parsec">Parsec</a> and is more up to date.</p>
 
@@ -105,8 +94,7 @@ window.onload = wrap_img;
 
 <p>Without further ado, let’s get right to it.</p>
 
-<h3 id="environment-and-setup">
-<a class="anchor" href="#environment-and-setup" aria-hidden="true"><span class="octicon octicon-link"></span></a>Environment and Setup</h3>
+<h3 id="environment-and-setup">Environment and Setup</h3>
 
 <p>This post is written against <code class="language-plaintext highlighter-rouge">stack</code>, <code class="language-plaintext highlighter-rouge">ghc</code> version 8.0.1 and <code class="language-plaintext highlighter-rouge">megaparsec</code> version 5.0.1.</p>
 
@@ -124,8 +112,7 @@ window.onload = wrap_img;
 
 <p>With that done, we have everything we need to begin. All the code examples below should be written in <code class="language-plaintext highlighter-rouge">myparser.hs</code>.</p>
 
-<h3 id="parsing-a-single-letter">
-<a class="anchor" href="#parsing-a-single-letter" aria-hidden="true"><span class="octicon octicon-link"></span></a>Parsing a single letter</h3>
+<h3 id="parsing-a-single-letter">Parsing a single letter</h3>
 
 <p>Let’s start with the simplest of parsers. We’ll parse a single letter, and output results, based on whether it passed or failed. This should serve a secondary purpose of verifying that we’ve set up everything correctly.</p>
 
@@ -160,7 +147,7 @@ window.onload = wrap_img;
 <p>Let’s run this code and see what happens:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>stack runghc myparser.hs haskell
-<span class="s1">'h'</span> 
+<span class="s1">'h'</span>
 
 <span class="nv">$ </span>stack runghc myparser.hs javascript
 1:1:
@@ -170,8 +157,7 @@ expecting <span class="s1">'h'</span>
 
 <p>So we get our first working parser, which gives us the result or helpful error messages to boot.</p>
 
-<h3 id="how-parsing-works">
-<a class="anchor" href="#how-parsing-works" aria-hidden="true"><span class="octicon octicon-link"></span></a>How parsing works</h3>
+<h3 id="how-parsing-works">How parsing works</h3>
 
 <p>When we run a parser, it begins parsing from the very beginning of input. The parser we write should match the input continuously, or it’ll fail. Also, the parser will match/consume only as much as we’ll tell it to.</p>
 
@@ -181,8 +167,7 @@ expecting <span class="s1">'h'</span>
 
 <p>That said, we’ll see how to tie together multiple parsers which let us skip letters or run multiple parsers over same inputs to see what fits.</p>
 
-<h3 id="parsing-this-or-that">
-<a class="anchor" href="#parsing-this-or-that" aria-hidden="true"><span class="octicon octicon-link"></span></a>Parsing this OR that</h3>
+<h3 id="parsing-this-or-that">Parsing this OR that</h3>
 
 <p>What if we have a scenario where we want to be able to run more than one parser on same input, in case the previous one fails. We have a handy infix function <code class="language-plaintext highlighter-rouge">&lt;|&gt;</code> for exactly that.</p>
 
@@ -216,8 +201,7 @@ expecting <span class="s1">'h'</span> or <span class="s1">'j'</span>
 
 <p>Even though we’ve only combined two single letter parsers, this infix method <code class="language-plaintext highlighter-rouge">&lt;|&gt;</code> works on arbitrarily complex parsers.</p>
 
-<h3 id="parsing-this-and-that">
-<a class="anchor" href="#parsing-this-and-that" aria-hidden="true"><span class="octicon octicon-link"></span></a>Parsing this AND that</h3>
+<h3 id="parsing-this-and-that">Parsing this AND that</h3>
 
 <p>As we’ve seen, <code class="language-plaintext highlighter-rouge">&lt;|&gt;</code> basically acts as boolean OR function for parsers. But we also want to be able to run more than one parser one after another sequentially, each parser consuming a part of input string, and forwarding the rest onwards.</p>
 
@@ -268,8 +252,7 @@ expecting 'h'
 
 <p>So far, we’ve only been using a single parser - <code class="language-plaintext highlighter-rouge">char</code>. There are many other useful parsers which we have in our arsenal out of the box. For the full list, check out the API docs for <a href="https://hackage.haskell.org/package/megaparsec-5.1.2/docs/Text-Megaparsec-Char.html">Text.Megaparsec.Char</a>.</p>
 
-<h3 id="combinators">
-<a class="anchor" href="#combinators" aria-hidden="true"><span class="octicon octicon-link"></span></a>Combinators</h3>
+<h3 id="combinators">Combinators</h3>
 
 <p>Combinators are functions that we use to combine one or more parsers in different ways. We’ve already seen one of them - the <code class="language-plaintext highlighter-rouge">&lt;|&gt;</code> function. But that’s neither the only combinator available to us, nor is that that only way we can combine our parsers.</p>
 
@@ -283,7 +266,7 @@ expecting 'h'
     <span class="n">input</span> <span class="o">&lt;-</span> <span class="n">fmap</span> <span class="n">head</span> <span class="n">getArgs</span>
     <span class="n">parseTest</span> <span class="n">wordP</span> <span class="n">input</span>
 
-<span class="n">wordP</span> <span class="o">::</span> <span class="kt">Parser</span> <span class="kt">String</span>  
+<span class="n">wordP</span> <span class="o">::</span> <span class="kt">Parser</span> <span class="kt">String</span>
 <span class="n">wordP</span> <span class="o">=</span> <span class="n">some</span> <span class="n">alphaNumChar</span>
 </code></pre></div></div>
 
@@ -314,8 +297,7 @@ expecting alphanumeric character
 
 <p>Note: There’s also a <code class="language-plaintext highlighter-rouge">many</code> combinator which matches 0 or more occurrences of the supplied parser.</p>
 
-<h3 id="transforming-parsed-strings">
-<a class="anchor" href="#transforming-parsed-strings" aria-hidden="true"><span class="octicon octicon-link"></span></a>Transforming parsed strings</h3>
+<h3 id="transforming-parsed-strings">Transforming parsed strings</h3>
 
 <p>More often than not, if we’re parsing a string, it’s because we want to extract some data out from it and do something with it. For example, we might be parsing an entries from account statement, and we want to convert the parsed balances to a number type.</p>
 
@@ -367,8 +349,7 @@ expecting <span class="s1">'*'</span>
 
 <p>We can similarly parse strings into our custom datatypes, convert between them and more. We just need to remember that the datatype of the final output of parser is reflected in the datatype of the parser itself.</p>
 
-<h3 id="conclusion">
-<a class="anchor" href="#conclusion" aria-hidden="true"><span class="octicon octicon-link"></span></a>Conclusion</h3>
+<h3 id="conclusion">Conclusion</h3>
 
 <p>There are many more tools to discover in megaparsec itself, for various general and specific tasks. With this rather lengthy tutorial, I hope I have been able to get some idea of how we can get started with writing parsers. Feel free to share thoughts on the <a href="https://www.reddit.com/r/haskell/comments/5ow2v5/beginners_guide_to_megaparsec/">reddit thread</a>.</p>
 
