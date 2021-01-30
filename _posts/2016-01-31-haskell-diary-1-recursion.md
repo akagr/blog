@@ -3,7 +3,7 @@ toc: true
 layout: post
 description:
 categories: []
-title: Haskell Diary #1 - Recursion
+title: Haskell Diary 1 - Recursion
 ---
 Haskell is the first pure functional programming language that I have had a serious contact with. I'm very much a noob right now but I've found that there's a lot of gold to be found right from day 1 in functional world. So I've thought about documenting things which I found really cool, mind bending or which simply took a long time for me to wrap my head around (still, cool).
 

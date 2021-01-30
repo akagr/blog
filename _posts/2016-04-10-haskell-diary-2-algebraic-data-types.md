@@ -3,7 +3,7 @@ toc: true
 layout: post
 description:
 categories: []
-title: Haskell Diary #2 - Algebra of Data Types
+title: Haskell Diary 2 - Algebra of Data Types
 ---
 In every single Haskell guide I've been through, the term **Algebraic Data Types** is mentioned at least once. In most cases, the text simply moved on to how types are defined and used. A small minority actually tries to explain why Haskell's data types are called `Algebraic`. An even smaller minority succeeded in getting the point across. Here's me documenting what I've learned so far about them. Hopefully it'd be of some help for future Haskell learners.
 
