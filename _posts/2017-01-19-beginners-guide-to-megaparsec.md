@@ -283,7 +283,7 @@ We can similarly parse strings into our custom datatypes, convert between them a
 
 ### Conclusion
 
-There are many more tools to discover in megaparsec itself, for various general and specific tasks. With this rather lengthy tutorial, I hope I have been able to get some idea of how we can get started with writing parsers. Feel free to share thoughts on the [reddit thread][comments].
+There are many more tools to discover in megaparsec itself, for various general and specific tasks. With this rather lengthy tutorial, I hope I have been able to get some idea of how we can get started with writing parsers. Feel free to share thoughts below or on the [reddit thread][comments].
 
 [megaparsec-hackage]: https://hackage.haskell.org/package/megaparsec
 [parsec-hackage]: https://hackage.haskell.org/package/parsec

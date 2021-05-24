@@ -4,6 +4,7 @@ layout: post
 description: Find out how to build cancellable async calls with observables
 categories: []
 title: What Promises Do That Observables Can’t
+comments: true
 ---
 *Note: This is a cross-post of an article I authored. The original was published at [Modus Create, Inc.](http://moduscreate.com/observables-and-promises/) on April 06, 2016.*
 
@@ -110,4 +111,4 @@ The above example could be found in action at [this plunk](http://plnkr.co/edit/
 
 Observables are powerful. And we’ve barely scratched the surface. They’re one of the proposed standards in ES2016. Looks like popular libraries are ending up in language specification these days :)
 
-I’d love to hear your takeaways from this post and how you used observables in some new cool way. Any points for improving this post will be deeply appreciated as well. Use [reddit](https://www.reddit.com/r/Angular2/comments/4dmpd9/what_promises_do_that_observables_cant/) or reach me on [Twitter](https://twitter.com/akshagrwl).
+I’d love to hear your takeaways from this post and how you used observables in some new cool way. Any points for improving this post will be deeply appreciated as well. Use the comments below, [reddit](https://www.reddit.com/r/Angular2/comments/4dmpd9/what_promises_do_that_observables_cant/) or reach me on [Twitter](https://twitter.com/akshagrwl).

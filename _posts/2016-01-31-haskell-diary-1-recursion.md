@@ -4,6 +4,7 @@ layout: post
 description: See how lazy loading in Haskell makes some very clever code possible
 categories: []
 title: Haskell Diary 1 - Recursion
+comments: true
 ---
 Haskell is the first pure functional programming language that I have had a serious contact with. I'm very much a noob right now but I've found that there's a lot of gold to be found right from day 1 in functional world. So I've thought about documenting things which I found really cool, mind bending or which simply took a long time for me to wrap my head around (still, cool).
 
@@ -105,7 +106,7 @@ So when we do a `take 30 fibs`, it'll start recursing. And since since we told i
 
 While I know enough about recursion and Haskell library functions to try and explain how and why this code works, I imagine it'd take a bit of time for me to come up with such solutions myself. Hopefully sooner than later.
 
-Let me know your thoughts over at [reddit thread](https://www.reddit.com/r/haskell/comments/43imla/haskell_diary_1_recursion/) for this post.
+Let me know your thoughts below or over at [reddit thread](https://www.reddit.com/r/haskell/comments/43imla/haskell_diary_1_recursion/) for this post.
 
 **Update 1**:
 As */u/twistier* pointed out over at reddit, a better definition of recursion would be *a value, which may or may not be a function, being self referential*.

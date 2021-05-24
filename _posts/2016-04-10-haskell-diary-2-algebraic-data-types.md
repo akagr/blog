@@ -4,6 +4,7 @@ layout: post
 description: Theoretical analysis of what data types represent and how they behave
 categories: []
 title: Haskell Diary 2 - Algebra of Data Types
+comments: true
 ---
 In every single Haskell guide I've been through, the term **Algebraic Data Types** is mentioned at least once. In most cases, the text simply moved on to how types are defined and used. A small minority actually tries to explain why Haskell's data types are called `Algebraic`. An even smaller minority succeeded in getting the point across. Here's me documenting what I've learned so far about them. Hopefully it'd be of some help for future Haskell learners.
 
@@ -221,4 +222,4 @@ I wrote this post for a select species of programmers who like to know what they
 
 For a fuller discussion on the algebra of data types, including recursive types, there's a great series of posts [here](https://chris-taylor.github.io/blog/2013/02/10/the-algebra-of-algebraic-data-types/).
 
-I'll appreciate any and all feedback. Use this [reddit thread](https://www.reddit.com/r/haskell/comments/4e5fxp/haskell_diary_2_algebra_of_data_types/). Thanks for reading!
+I'll appreciate any and all feedback. Use the comments below or this [reddit thread](https://www.reddit.com/r/haskell/comments/4e5fxp/haskell_diary_2_algebra_of_data_types/). Thanks for reading!

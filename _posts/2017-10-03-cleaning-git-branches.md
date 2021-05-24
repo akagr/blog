@@ -4,6 +4,7 @@ layout: post
 description: How to clean git branches which aren't active anymore
 categories: []
 title: Cleaning merged Git branches
+comments: true
 ---
 Doing some git house cleaning is something that gets neglected more often than not. With zero-cost branches in git (unlike svn), most developers creates zillions of branches during the course of their projects. Most git workflows see creation of every unit of work being put under its own branch. This means individual branches for features, bug fixes, hot fixes etc.
 
@@ -51,5 +52,3 @@ git branch -r --merged | grep -E -v "(^\*|master)" | sed 's/origin\///' | xargs 
 Note the addition of `sed` in our pipeline for deletion of remote branches. That's because we need to strip the `origin/` part from the names to make them compatible with the consequent `git push`.
 
 Hope this makes it easier to keep the branch population under control.
-
-Have a comment? Reply on [@akshagrwl](https://twitter.com/akshagrwl/status/915170192904335360).
