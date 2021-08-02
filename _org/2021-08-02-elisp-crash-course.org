@@ -1,0 +1,110 @@
+#+TITLE: Elisp Crash Course
+#+AUTHOR: Akash Agrawal
+#+EMAIL: akagr@outlook.com
+#+STARTUP: SHOW ALL
+#+OPTIONS: toc:nil
+#+EXPORT_FILE_NAME: ../_posts/2021-08-02-elisp-crash-course.md
+
+#+BEGIN_EXPORT html
+---
+toc: false
+layout: post
+description: A light speed intro to getting dangerous with Elisp
+tags: ["emacs"]
+title: Elisp Crash Course
+comments: true
+published: false
+---
+#+END_EXPORT
+
+To keep this as short as possible, I'm going to skip an introduction to origin or programming languages, computers and universe. I'm assuming you're here because you know use emacs or want to use it and think learning Elisp will help getting to know the editor better. You'd be right. Let's jump straight to it.
+
+* LISt Processing
+
+Most things in Lisp are lists. That is expected in a language named so and built around the concept. But there's a lot of cleverness here (and gotchas).
+
+Lists are delimited by ~()~, commonly known parenthesis. This is an empty list:
+#+BEGIN_SRC emacs-lisp
+  ()
+#+END_SRC
+
+The first element of a list is name of function. The rest of the list are arguments to that function.
+#+BEGIN_SRC emacs-lisp
+  (message "hello, world")
+#+END_SRC
+
+~message~ is a function and ~"hello, world"~ its only argument. Running this code outputs "hello, world" to the message log.
+
+Unlike most popular languages, Lisp makes no differentiation between a function and operator. i.e. There are no operators in lisp, only functions.
+#+BEGIN_SRC emacs-lisp
+  (+ 1 2)
+#+END_SRC
+
+~+~ is a function which takes arguments and adds them up. If we try to write ~(1 + 2)~, Lisp will throw error. It expects the first element to be a function, and ~1~ is not a function, it's a primitive.
+
+Lists can be nested easily, but follow the same rules. The first element should be a function.
+#+BEGIN_SRC emacs-lisp
+  (+ 1 2 (- 6 3))
+#+END_SRC
+This is equivalent to writing ~(1 + 2 + (6 - 3))~ in other languages. Note that ~(- 6 3)~ is a list in itself, with ~-~ or minus being the function, which appears at its head. The result is evaluated and replaced into the parent list, which then becomes ~(+ 1 2 3)~.
+
+If the first element is always a function, how do we express collections? We use ~quote~ function for that.
+#+BEGIN_SRC emacs-lisp
+(quote 1 2 3)
+#+END_SRC
+
+This creates a collection with three values. But it does more than that. ~quote~ tells lisp to not evaluate its arguments.
+
+#+BEGIN_SRC emacs-lisp
+  (quote + 1 2 3)
+#+END_SRC
+This also creates a list of three elements. ~quote~ prevents evaluation, so ~+~ is just an element of the list here.
+
+Creating lists of data is so common, that we have shorthand for this.
+#+BEGIN_SRC emacs-lisp
+  (quote 1 2 3)
+
+  '(1 2 3)
+#+END_SRC
+
+Both the above are equivalent, and can be used interchangeably.
+
+To recap the difference:
+#+BEGIN_SRC emacs-lisp
+  (+ 1 2) ;; this is a function call, which evaluates to 3
+
+  '(+ 1 2) ;; this is a list of 3 elements, one symbol and two numbers
+#+END_SRC
+
+* Variables
+
+  ~defvar~ defines a global variable and sets its initial value.
+  #+BEGIN_SRC emacs-lisp
+    (defvar myglobal 123)
+  #+END_SRC
+
+  ~setq~ changes the value of a variable that's already defined.
+  #+BEGIN_SRC emacs-lisp
+    (setq myglobal 456)
+  #+END_SRC
+
+  If the variable is not already defined, ~setq~ also defines the variable globally. We can use ~setq~ directly, without ~defvar~, but Emacs will give us a warning - something something about using a /free/ variable. i.e. It's a bad practice to use variables without defining them, even though you can.
+
+  ~let~ defines one or more variables, which are local to the expressions that follow variable declaration.
+  #+BEGIN_SRC emacs-lisp
+    (let ((local-a 123)
+          (local-b 456))
+      ;; Accessible inside "let" body
+      (message "%s %s" local-a local-b))
+
+    ;; Gives error outside "let" body
+    (message "%s" local-a)
+  #+END_SRC
+
+  ~let~ can be used inside or outside of a function body. A variation called ~let*~ allows using the variable inside declaration.
+  #+BEGIN_SRC emacs-lisp
+    (let* ((local-a 1)
+           (local-b (1+ local-a)))
+      (message "%s" local-b))
+  #+END_SRC
+  In the code above, ~local-a~ is a local variable, which gets re-used in the definition of ~local-b~ variable. This is not possible in normal ~let~ expression.
