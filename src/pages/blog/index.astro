@@ -1,0 +1,112 @@
+---
+import { getCollection } from 'astro:content';
+import BaseHead from '../../components/BaseHead.astro';
+import Footer from '../../components/Footer.astro';
+import FormattedDate from '../../components/FormattedDate.astro';
+import Header from '../../components/Header.astro';
+import { SITE_TITLE } from '../../consts';
+
+const posts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead
+			title={`Blog · ${SITE_TITLE}`}
+			description="Lessons and ramblings, thoughts and speculations on programming, tools, and the craft."
+		/>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<h1>Blog</h1>
+			<p class="blurb">Lessons and ramblings, thoughts and speculations. Opinions are my own.</p>
+			<ul class="post-list">
+				{
+					posts.map((post) => (
+						<li>
+							<a href={`/blog/${post.id}/`}>
+								<span class="post-title">{post.data.title}</span>
+								<FormattedDate date={post.data.pubDate} />
+							</a>
+							<p class="post-desc">{post.data.description}</p>
+							{post.data.tags.length > 0 && (
+								<div class="tag-row">
+									{post.data.tags.map((tag) => (
+										<span class="tag">#{tag}</span>
+									))}
+								</div>
+							)}
+						</li>
+					))
+				}
+			</ul>
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	.blurb {
+		color: rgb(var(--gray));
+		margin-top: -0.5rem;
+		margin-bottom: 2rem;
+	}
+	.post-list {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+	.post-list li {
+		padding: 1.25rem 0;
+		border-bottom: 1px solid rgb(var(--gray-light));
+	}
+	.post-list li:last-child {
+		border-bottom: none;
+	}
+	.post-list li > a {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 1rem;
+		text-decoration: none;
+	}
+	.post-title {
+		font-size: 1.3em;
+		font-weight: 700;
+		color: rgb(var(--black));
+	}
+	.post-list li > a:hover .post-title {
+		color: var(--accent);
+	}
+	.post-list li > a time {
+		white-space: nowrap;
+		color: rgb(var(--gray));
+		font-size: 0.9em;
+	}
+	.post-desc {
+		margin: 0.35rem 0 0.6rem;
+		color: rgb(var(--gray-dark));
+	}
+	.tag-row {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.4rem;
+	}
+	.tag {
+		font-size: 0.78em;
+		padding: 0.1rem 0.55rem;
+		border-radius: 999px;
+		background: rgb(var(--gray-light));
+		color: rgb(var(--gray-dark));
+	}
+	@media (max-width: 720px) {
+		.post-list li > a {
+			flex-direction: column;
+			gap: 0.15rem;
+		}
+	}
+</style>

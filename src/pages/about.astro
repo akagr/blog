@@ -1,0 +1,49 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { SITE_TITLE } from '../consts';
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={`About · ${SITE_TITLE}`} description="A little bit about Akash Agrawal." />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<article class="prose">
+				<h1>About me</h1>
+				<p>
+					I'm Akash — a software engineer who enjoys building small, focused tools and shipping
+					them end to end. Over the years I've worked across the stack: web frontends and APIs,
+					native mobile apps, and command-line tools.
+				</p>
+				<p>
+					I like reading and tinkering with programming languages (Elixir, Ruby, JavaScript, Swift,
+					Lisp), editors (Emacs, Vim, VS Code), tools (Docker, Kubernetes), and frameworks (Angular,
+					React, SwiftUI, Phoenix). Away from the keyboard I'm usually doing
+					<a href="https://www.instagram.com/akshagrwl" target="_blank" rel="noopener"
+						>photography</a
+					>, playing video games, or reading sci-fi and fantasy.
+				</p>
+				<p>
+					This site is where I keep my writing and a few of the things I've built. You can find me
+					on
+					<a href="https://github.com/akagr" target="_blank" rel="noopener">GitHub</a>
+					and <a href="https://twitter.com/akshagrwl" target="_blank" rel="noopener">Twitter/X</a>.
+				</p>
+			</article>
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	.prose {
+		width: 720px;
+		max-width: calc(100% - 2em);
+		margin: auto;
+	}
+</style>

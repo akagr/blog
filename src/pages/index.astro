@@ -1,0 +1,251 @@
+---
+import { getCollection } from 'astro:content';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import Header from '../components/Header.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+
+const posts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+const recentPosts = posts.slice(0, 4);
+
+const projects = [
+	{
+		name: 'tax-tools',
+		tagline:
+			'Generate a ready-to-use Indian Schedule FA (Foreign Assets) ITR report from Interactive Brokers holdings — calendar-year basis, SBI TTBR conversion, exact peak values, full audit trail.',
+		url: 'https://github.com/akagr/tax-tools',
+		tags: ['Go', 'CLI', 'Personal Finance'],
+	},
+	{
+		name: 'GaadiLog',
+		tagline:
+			'Car service & expense tracker for Indian vehicle owners — track fuel, service, and documents (RC / Insurance / PUC). Local-first, no account, no cloud. Native SwiftUI + Jetpack Compose apps, live on the App Store and Google Play.',
+		url: 'https://github.com/akagr/car-log-app',
+		tags: ['SwiftUI', 'Jetpack Compose', 'iOS & Android'],
+	},
+	{
+		name: 'gaadilog-site',
+		tagline: 'The marketing site for GaadiLog — built from scratch and shipped on GitHub Pages.',
+		url: 'https://akagr.github.io/gaadilog-site/',
+		tags: ['Website', 'CSS'],
+	},
+];
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<section class="intro">
+				<h1>Hi, I'm Akash 👋</h1>
+				<p class="lead">
+					I'm a software engineer. I like building small, useful things and writing about the
+					craft along the way — programming languages, tools, and the occasional deep dive.
+				</p>
+				<p>
+					I enjoy Elixir, Ruby, JavaScript, Swift and Lisp; editors like Emacs and Vim; and
+					frameworks from Phoenix to SwiftUI. Off the keyboard you'll find me on photography, video
+					games, and sci-fi and fantasy.
+				</p>
+				<div class="cta">
+					<a class="button" href="/blog">Read the blog →</a>
+					<a class="button ghost" href="https://github.com/akagr" target="_blank" rel="noopener"
+						>GitHub</a
+					>
+				</div>
+			</section>
+
+			<section class="projects">
+				<h2>Things I've built</h2>
+				<div class="project-grid">
+					{
+						projects.map((project) => (
+							<a class="project-card" href={project.url} target="_blank" rel="noopener">
+								<h3>{project.name}</h3>
+								<p>{project.tagline}</p>
+								<div class="tag-row">
+									{project.tags.map((tag) => (
+										<span class="tag">{tag}</span>
+									))}
+								</div>
+							</a>
+						))
+					}
+				</div>
+			</section>
+
+			<section class="writing">
+				<div class="writing-head">
+					<h2>Recent writing</h2>
+					<a href="/blog">All posts →</a>
+				</div>
+				<ul class="post-list">
+					{
+						recentPosts.map((post) => (
+							<li>
+								<a href={`/blog/${post.id}/`}>
+									<span class="post-title">{post.data.title}</span>
+									<FormattedDate date={post.data.pubDate} />
+								</a>
+								<p class="post-desc">{post.data.description}</p>
+							</li>
+						))
+					}
+				</ul>
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	.intro {
+		margin-bottom: 3.5rem;
+	}
+	.intro h1 {
+		margin-bottom: 0.5rem;
+	}
+	.lead {
+		font-size: 1.25em;
+		color: rgb(var(--gray-dark));
+	}
+	.cta {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+		margin-top: 1.5rem;
+	}
+	.button {
+		display: inline-block;
+		padding: 0.5rem 1.1rem;
+		border-radius: 8px;
+		background: var(--accent);
+		color: #fff;
+		text-decoration: none;
+		font-weight: 700;
+		transition: 0.2s ease;
+	}
+	.button:hover {
+		background: var(--accent-dark);
+		color: #fff;
+	}
+	.button.ghost {
+		background: transparent;
+		color: var(--accent);
+		border: 2px solid var(--accent);
+		padding: calc(0.5rem - 2px) calc(1.1rem - 2px);
+	}
+	.button.ghost:hover {
+		background: rgba(var(--gray-light), 60%);
+	}
+
+	section h2 {
+		font-size: 1.953em;
+		margin-bottom: 1rem;
+	}
+
+	.projects {
+		margin-bottom: 3.5rem;
+	}
+	.project-grid {
+		display: grid;
+		gap: 1rem;
+	}
+	.project-card {
+		display: block;
+		padding: 1.25rem 1.5rem;
+		border: 1px solid rgb(var(--gray-light));
+		border-radius: 12px;
+		background: #fff;
+		text-decoration: none;
+		color: inherit;
+		transition: 0.2s ease;
+	}
+	.project-card:hover {
+		box-shadow: var(--box-shadow);
+		transform: translateY(-2px);
+	}
+	.project-card h3 {
+		margin-bottom: 0.4rem;
+		color: var(--accent);
+	}
+	.project-card p {
+		margin-bottom: 0.9rem;
+		font-size: 0.95em;
+		color: rgb(var(--gray-dark));
+	}
+	.tag-row {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.4rem;
+	}
+	.tag {
+		font-size: 0.75em;
+		padding: 0.15rem 0.6rem;
+		border-radius: 999px;
+		background: rgb(var(--gray-light));
+		color: rgb(var(--gray-dark));
+	}
+
+	.writing-head {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 1rem;
+	}
+	.writing-head a {
+		white-space: nowrap;
+		text-decoration: none;
+		font-weight: 700;
+	}
+	.post-list {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+	.post-list li {
+		padding: 1rem 0;
+		border-bottom: 1px solid rgb(var(--gray-light));
+	}
+	.post-list li:last-child {
+		border-bottom: none;
+	}
+	.post-list li > a {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 1rem;
+		text-decoration: none;
+	}
+	.post-title {
+		font-size: 1.2em;
+		font-weight: 700;
+		color: rgb(var(--black));
+	}
+	.post-list li > a:hover .post-title {
+		color: var(--accent);
+	}
+	.post-list li > a time {
+		white-space: nowrap;
+		color: rgb(var(--gray));
+		font-size: 0.9em;
+	}
+	.post-desc {
+		margin: 0.25rem 0 0;
+		color: rgb(var(--gray));
+		font-size: 0.95em;
+	}
+	@media (max-width: 720px) {
+		.post-list li > a {
+			flex-direction: column;
+			gap: 0.15rem;
+		}
+	}
+</style>
