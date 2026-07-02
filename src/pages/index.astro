@@ -1,9 +1,11 @@
 ---
+import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
+import photo from '../assets/akash.jpg';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 
 const posts = (await getCollection('blog')).sort(
@@ -15,22 +17,22 @@ const projects = [
 	{
 		name: 'tax-tools',
 		tagline:
-			'Generate a ready-to-use Indian Schedule FA (Foreign Assets) ITR report from Interactive Brokers holdings — calendar-year basis, SBI TTBR conversion, exact peak values, full audit trail.',
+			'A Go CLI that turns Interactive Brokers holdings into a ready-to-file Indian Schedule FA (Foreign Assets) ITR report — calendar-year basis, SBI TTBR conversion, exact peak values, and a full audit trail.',
 		url: 'https://github.com/akagr/tax-tools',
-		tags: ['Go', 'CLI', 'Personal Finance'],
+		meta: 'Go · CLI',
 	},
 	{
 		name: 'GaadiLog',
 		tagline:
-			'Car service & expense tracker for Indian vehicle owners — track fuel, service, and documents (RC / Insurance / PUC). Local-first, no account, no cloud. Native SwiftUI + Jetpack Compose apps, live on the App Store and Google Play.',
+			'A local-first car service & expense tracker for Indian vehicle owners — fuel, service and documents, no account required. Native SwiftUI + Jetpack Compose apps, live on the App Store and Google Play.',
 		url: 'https://github.com/akagr/car-log-app',
-		tags: ['SwiftUI', 'Jetpack Compose', 'iOS & Android'],
+		meta: 'SwiftUI · Compose · iOS + Android',
 	},
 	{
 		name: 'gaadilog-site',
-		tagline: 'The marketing site for GaadiLog — built from scratch and shipped on GitHub Pages.',
+		tagline: 'The marketing site for GaadiLog — designed and shipped from scratch on GitHub Pages.',
 		url: 'https://akagr.github.io/gaadilog-site/',
-		tags: ['Website', 'CSS'],
+		meta: 'Website · CSS',
 	},
 ];
 ---
@@ -43,58 +45,54 @@ const projects = [
 	<body>
 		<Header />
 		<main>
-			<section class="intro">
-				<h1>Hi, I'm Akash 👋</h1>
+			<section class="hero">
+				<div class="avatar">
+					<Image src={photo} alt="Akash Agrawal" width={128} height={128} />
+				</div>
+				<p class="eyebrow">Solutions Architect · 15 Years</p>
+				<h1>Akash Agrawal</h1>
 				<p class="lead">
-					I'm a software engineer. I like building small, useful things and writing about the
-					craft along the way — programming languages, tools, and the occasional deep dive.
-				</p>
-				<p>
-					I enjoy Elixir, Ruby, JavaScript, Swift and Lisp; editors like Emacs and Vim; and
-					frameworks from Phoenix to SwiftUI. Off the keyboard you'll find me on photography, video
-					games, and sci-fi and fantasy.
+					I design, build and scale software end to end — distributed systems and cloud platforms,
+					web and native mobile, and the occasional sharp little tool. I like things that are simple
+					to reason about and built to last.
 				</p>
 				<div class="cta">
-					<a class="button" href="/blog">Read the blog →</a>
-					<a class="button ghost" href="https://github.com/akagr" target="_blank" rel="noopener"
-						>GitHub</a
-					>
+					<a class="button" href="/blog">Read the writing</a>
+					<a class="button ghost" href="/about">About me</a>
 				</div>
 			</section>
 
-			<section class="projects">
-				<h2>Things I've built</h2>
-				<div class="project-grid">
+			<section class="section">
+				<h2>Selected work</h2>
+				<div class="projects">
 					{
 						projects.map((project) => (
-							<a class="project-card" href={project.url} target="_blank" rel="noopener">
-								<h3>{project.name}</h3>
-								<p>{project.tagline}</p>
-								<div class="tag-row">
-									{project.tags.map((tag) => (
-										<span class="tag">{tag}</span>
-									))}
+							<a class="project" href={project.url} target="_blank" rel="noopener">
+								<div class="project-head">
+									<h3>{project.name}</h3>
+									<span class="meta">{project.meta}</span>
 								</div>
+								<p>{project.tagline}</p>
 							</a>
 						))
 					}
 				</div>
 			</section>
 
-			<section class="writing">
-				<div class="writing-head">
-					<h2>Recent writing</h2>
-					<a href="/blog">All posts →</a>
+			<section class="section">
+				<div class="section-head">
+					<h2>Writing</h2>
+					<a class="all" href="/blog">All posts →</a>
 				</div>
-				<ul class="post-list">
+				<ul class="posts">
 					{
 						recentPosts.map((post) => (
 							<li>
 								<a href={`/blog/${post.id}/`}>
 									<span class="post-title">{post.data.title}</span>
+									<span class="post-desc">{post.data.description}</span>
 									<FormattedDate date={post.data.pubDate} />
 								</a>
-								<p class="post-desc">{post.data.description}</p>
 							</li>
 						))
 					}
@@ -106,146 +104,160 @@ const projects = [
 </html>
 
 <style>
-	.intro {
-		margin-bottom: 3.5rem;
+	.hero {
+		text-align: center;
+		padding-bottom: 3.5rem;
+		border-bottom: 1px solid var(--line);
 	}
-	.intro h1 {
-		margin-bottom: 0.5rem;
+	.avatar {
+		width: 128px;
+		height: 128px;
+		margin: 0 auto 1.5rem;
+		border-radius: 50%;
+		overflow: hidden;
+		box-shadow: var(--shadow);
+		border: 4px solid var(--bg-raised);
+	}
+	.avatar :global(img) {
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+	.hero h1 {
+		margin-bottom: 1rem;
 	}
 	.lead {
-		font-size: 1.25em;
-		color: rgb(var(--gray-dark));
+		max-width: 34rem;
+		margin: 0 auto;
+		font-size: 1.2rem;
+		color: var(--text-soft);
 	}
 	.cta {
 		display: flex;
+		justify-content: center;
 		flex-wrap: wrap;
 		gap: 0.75rem;
-		margin-top: 1.5rem;
+		margin-top: 1.75rem;
 	}
 	.button {
 		display: inline-block;
-		padding: 0.5rem 1.1rem;
-		border-radius: 8px;
-		background: var(--accent);
-		color: #fff;
+		font-family: var(--font-sans);
+		font-weight: 500;
+		font-size: 0.95rem;
+		padding: 0.6rem 1.3rem;
+		border-radius: 999px;
+		background: var(--text);
+		color: var(--bg);
 		text-decoration: none;
-		font-weight: 700;
-		transition: 0.2s ease;
+		border: 1px solid var(--text);
+		transition: 0.15s ease;
 	}
 	.button:hover {
-		background: var(--accent-dark);
-		color: #fff;
+		opacity: 0.85;
+		color: var(--bg);
 	}
 	.button.ghost {
 		background: transparent;
-		color: var(--accent);
-		border: 2px solid var(--accent);
-		padding: calc(0.5rem - 2px) calc(1.1rem - 2px);
+		color: var(--text);
+		border-color: var(--line);
 	}
 	.button.ghost:hover {
-		background: rgba(var(--gray-light), 60%);
+		border-color: var(--text);
+		color: var(--text);
+		opacity: 1;
 	}
 
-	section h2 {
-		font-size: 1.953em;
-		margin-bottom: 1rem;
+	.section {
+		padding-top: 3.5rem;
+	}
+	.section-head {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 1rem;
+	}
+	.all {
+		font-size: 0.9rem;
+		text-decoration: none;
+		color: var(--muted);
+		white-space: nowrap;
+	}
+	.all:hover {
+		color: var(--accent);
 	}
 
 	.projects {
-		margin-bottom: 3.5rem;
-	}
-	.project-grid {
 		display: grid;
-		gap: 1rem;
+		gap: 0.5rem;
+		margin-top: 0.5rem;
 	}
-	.project-card {
+	.project {
 		display: block;
-		padding: 1.25rem 1.5rem;
-		border: 1px solid rgb(var(--gray-light));
-		border-radius: 12px;
-		background: #fff;
+		padding: 1.5rem 0;
+		border-top: 1px solid var(--line);
 		text-decoration: none;
 		color: inherit;
-		transition: 0.2s ease;
 	}
-	.project-card:hover {
-		box-shadow: var(--box-shadow);
-		transform: translateY(-2px);
-	}
-	.project-card h3 {
-		margin-bottom: 0.4rem;
+	.project:hover .project-head h3 {
 		color: var(--accent);
 	}
-	.project-card p {
-		margin-bottom: 0.9rem;
-		font-size: 0.95em;
-		color: rgb(var(--gray-dark));
-	}
-	.tag-row {
+	.project-head {
 		display: flex;
-		flex-wrap: wrap;
-		gap: 0.4rem;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 0.75rem;
 	}
-	.tag {
-		font-size: 0.75em;
-		padding: 0.15rem 0.6rem;
-		border-radius: 999px;
-		background: rgb(var(--gray-light));
-		color: rgb(var(--gray-dark));
+	.project-head h3 {
+		margin: 0;
+		transition: 0.15s ease;
+	}
+	.meta {
+		font-size: 0.82rem;
+		color: var(--muted);
+		white-space: nowrap;
+		text-align: right;
+	}
+	.project p {
+		margin: 0.5rem 0 0;
+		color: var(--text-soft);
+		font-size: 0.98rem;
 	}
 
-	.writing-head {
-		display: flex;
-		align-items: baseline;
-		justify-content: space-between;
-		gap: 1rem;
-	}
-	.writing-head a {
-		white-space: nowrap;
-		text-decoration: none;
-		font-weight: 700;
-	}
-	.post-list {
+	.posts {
 		list-style: none;
-		margin: 0;
+		margin: 0.5rem 0 0;
 		padding: 0;
 	}
-	.post-list li {
-		padding: 1rem 0;
-		border-bottom: 1px solid rgb(var(--gray-light));
+	.posts li {
+		border-top: 1px solid var(--line);
 	}
-	.post-list li:last-child {
-		border-bottom: none;
-	}
-	.post-list li > a {
-		display: flex;
-		align-items: baseline;
-		justify-content: space-between;
-		gap: 1rem;
+	.posts a {
+		display: block;
+		padding: 1.4rem 0;
 		text-decoration: none;
+		color: inherit;
 	}
 	.post-title {
-		font-size: 1.2em;
-		font-weight: 700;
-		color: rgb(var(--black));
+		display: block;
+		font-family: var(--font-serif);
+		font-size: 1.35rem;
+		font-weight: 600;
+		color: var(--text);
+		line-height: 1.2;
+		transition: 0.15s ease;
 	}
-	.post-list li > a:hover .post-title {
+	.posts a:hover .post-title {
 		color: var(--accent);
 	}
-	.post-list li > a time {
-		white-space: nowrap;
-		color: rgb(var(--gray));
-		font-size: 0.9em;
-	}
 	.post-desc {
-		margin: 0.25rem 0 0;
-		color: rgb(var(--gray));
-		font-size: 0.95em;
+		display: block;
+		color: var(--text-soft);
+		font-size: 0.98rem;
+		margin: 0.35rem 0 0.5rem;
 	}
-	@media (max-width: 720px) {
-		.post-list li > a {
-			flex-direction: column;
-			gap: 0.15rem;
-		}
+	.posts :global(time) {
+		font-size: 0.82rem;
+		color: var(--muted);
 	}
 </style>

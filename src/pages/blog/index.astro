@@ -15,31 +15,36 @@ const posts = (await getCollection('blog')).sort(
 <html lang="en">
 	<head>
 		<BaseHead
-			title={`Blog · ${SITE_TITLE}`}
+			title={`Writing · ${SITE_TITLE}`}
 			description="Lessons and ramblings, thoughts and speculations on programming, tools, and the craft."
 		/>
 	</head>
 	<body>
 		<Header />
 		<main>
-			<h1>Blog</h1>
-			<p class="blurb">Lessons and ramblings, thoughts and speculations. Opinions are my own.</p>
-			<ul class="post-list">
+			<header class="page-head">
+				<p class="eyebrow">Writing</p>
+				<h1>Notes on the craft</h1>
+				<p class="blurb">Lessons and ramblings, thoughts and speculations. Opinions are my own.</p>
+			</header>
+			<ul class="posts">
 				{
 					posts.map((post) => (
 						<li>
 							<a href={`/blog/${post.id}/`}>
 								<span class="post-title">{post.data.title}</span>
-								<FormattedDate date={post.data.pubDate} />
+								<span class="post-desc">{post.data.description}</span>
+								<span class="post-foot">
+									<FormattedDate date={post.data.pubDate} />
+									{post.data.tags.length > 0 && (
+										<span class="tags">
+											{post.data.tags.map((tag) => (
+												<span class="tag">{tag}</span>
+											))}
+										</span>
+									)}
+								</span>
 							</a>
-							<p class="post-desc">{post.data.description}</p>
-							{post.data.tags.length > 0 && (
-								<div class="tag-row">
-									{post.data.tags.map((tag) => (
-										<span class="tag">#{tag}</span>
-									))}
-								</div>
-							)}
 						</li>
 					))
 				}
@@ -50,63 +55,69 @@ const posts = (await getCollection('blog')).sort(
 </html>
 
 <style>
-	.blurb {
-		color: rgb(var(--gray));
-		margin-top: -0.5rem;
-		margin-bottom: 2rem;
+	.page-head {
+		text-align: center;
+		margin-bottom: 2.5rem;
 	}
-	.post-list {
+	.blurb {
+		color: var(--text-soft);
+		max-width: 32rem;
+		margin: 0 auto;
+	}
+	.posts {
 		list-style: none;
 		margin: 0;
 		padding: 0;
 	}
-	.post-list li {
-		padding: 1.25rem 0;
-		border-bottom: 1px solid rgb(var(--gray-light));
+	.posts li {
+		border-top: 1px solid var(--line);
 	}
-	.post-list li:last-child {
-		border-bottom: none;
+	.posts li:last-child {
+		border-bottom: 1px solid var(--line);
 	}
-	.post-list li > a {
-		display: flex;
-		align-items: baseline;
-		justify-content: space-between;
-		gap: 1rem;
+	.posts a {
+		display: block;
+		padding: 1.6rem 0;
 		text-decoration: none;
+		color: inherit;
 	}
 	.post-title {
-		font-size: 1.3em;
-		font-weight: 700;
-		color: rgb(var(--black));
+		display: block;
+		font-family: var(--font-serif);
+		font-size: 1.5rem;
+		font-weight: 600;
+		color: var(--text);
+		line-height: 1.2;
+		transition: 0.15s ease;
 	}
-	.post-list li > a:hover .post-title {
+	.posts a:hover .post-title {
 		color: var(--accent);
 	}
-	.post-list li > a time {
-		white-space: nowrap;
-		color: rgb(var(--gray));
-		font-size: 0.9em;
-	}
 	.post-desc {
-		margin: 0.35rem 0 0.6rem;
-		color: rgb(var(--gray-dark));
+		display: block;
+		color: var(--text-soft);
+		margin: 0.4rem 0 0.7rem;
 	}
-	.tag-row {
+	.post-foot {
 		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.5rem 1rem;
+		font-size: 0.82rem;
+		color: var(--muted);
+	}
+	.tags {
+		display: inline-flex;
 		flex-wrap: wrap;
 		gap: 0.4rem;
 	}
 	.tag {
-		font-size: 0.78em;
-		padding: 0.1rem 0.55rem;
+		padding: 0.05rem 0.55rem;
+		border: 1px solid var(--line);
 		border-radius: 999px;
-		background: rgb(var(--gray-light));
-		color: rgb(var(--gray-dark));
 	}
-	@media (max-width: 720px) {
-		.post-list li > a {
-			flex-direction: column;
-			gap: 0.15rem;
-		}
+	.tag::before {
+		content: '#';
+		opacity: 0.6;
 	}
 </style>

@@ -1,5 +1,4 @@
 ---
-import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
@@ -8,107 +7,98 @@ import Header from '../components/Header.astro';
 
 type Props = CollectionEntry<'blog'>['data'];
 
-const { title, description, pubDate, updatedDate, heroImage, tags } = Astro.props;
+const { title, description, pubDate, updatedDate, tags } = Astro.props;
 ---
 
 <html lang="en">
 	<head>
 		<BaseHead title={title} description={description} />
-		<style>
-			main {
-				width: calc(100% - 2em);
-				max-width: 100%;
-				margin: 0;
-			}
-			.hero-image {
-				width: 100%;
-			}
-			.hero-image img {
-				display: block;
-				margin: 0 auto;
-				border-radius: 12px;
-				box-shadow: var(--box-shadow);
-			}
-			.prose {
-				width: 720px;
-				max-width: calc(100% - 2em);
-				margin: auto;
-				padding: 1em;
-				color: rgb(var(--gray-dark));
-			}
-			.title {
-				margin-bottom: 1em;
-				padding: 1em 0;
-				text-align: center;
-				line-height: 1;
-			}
-			.title h1 {
-				margin: 0 0 0.5em 0;
-			}
-			.date {
-				margin-bottom: 0.5em;
-				color: rgb(var(--gray));
-			}
-			.last-updated-on {
-				font-style: italic;
-			}
-			.tag-row {
-				display: flex;
-				flex-wrap: wrap;
-				gap: 0.4rem;
-				justify-content: center;
-				margin-bottom: 1em;
-			}
-			.tag {
-				font-size: 0.78rem;
-				padding: 0.1rem 0.55rem;
-				border-radius: 999px;
-				background: rgb(var(--gray-light));
-				color: rgb(var(--gray-dark));
-			}
-			.back-link {
-				text-align: center;
-			}
-		</style>
 	</head>
-
 	<body>
 		<Header />
 		<main>
 			<article>
-				<div class="hero-image">
-					{heroImage && <Image width={1020} height={510} src={heroImage} alt="" />}
-				</div>
-				<div class="prose">
-					<div class="title">
-						<div class="date">
-							<FormattedDate date={pubDate} />
-							{
-								updatedDate && (
-									<div class="last-updated-on">
-										Last updated on <FormattedDate date={updatedDate} />
-									</div>
-								)
-							}
-						</div>
-						<h1>{title}</h1>
-						{
-							tags && tags.length > 0 && (
-								<div class="tag-row">
-									{tags.map((tag) => (
-										<span class="tag">#{tag}</span>
-									))}
-								</div>
-							)
-						}
-						<hr />
+				<header class="post-head">
+					<div class="meta">
+						<FormattedDate date={pubDate} />
+						{updatedDate && <span>· updated <FormattedDate date={updatedDate} /></span>}
 					</div>
+					<h1>{title}</h1>
+					{
+						tags && tags.length > 0 && (
+							<div class="tags">
+								{tags.map((tag) => (
+									<span class="tag">{tag}</span>
+								))}
+							</div>
+						)
+					}
+				</header>
+				<div class="prose">
 					<slot />
-					<hr />
-					<p class="back-link"><a href="/blog">← Back to all posts</a></p>
 				</div>
+				<footer class="post-foot">
+					<a href="/blog">← All writing</a>
+				</footer>
 			</article>
 		</main>
 		<Footer />
 	</body>
 </html>
+
+<style>
+	article {
+		margin: 0 auto;
+	}
+	.post-head {
+		text-align: center;
+		padding-bottom: 2rem;
+		margin-bottom: 2.5rem;
+		border-bottom: 1px solid var(--line);
+	}
+	.meta {
+		font-size: 0.85rem;
+		color: var(--muted);
+		margin-bottom: 0.5rem;
+	}
+	.tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.4rem;
+		justify-content: center;
+		margin-top: 1rem;
+	}
+	.tag {
+		font-size: 0.8rem;
+		padding: 0.05rem 0.55rem;
+		border: 1px solid var(--line);
+		border-radius: 999px;
+		color: var(--muted);
+	}
+	.tag::before {
+		content: '#';
+		opacity: 0.6;
+	}
+	.prose :global(h2) {
+		margin-top: 2.4rem;
+	}
+	.prose :global(h3) {
+		margin-top: 1.8rem;
+	}
+	.prose :global(img) {
+		border-radius: 12px;
+	}
+	.post-foot {
+		margin-top: 3rem;
+		padding-top: 1.5rem;
+		border-top: 1px solid var(--line);
+		font-size: 0.9rem;
+	}
+	.post-foot a {
+		text-decoration: none;
+		color: var(--muted);
+	}
+	.post-foot a:hover {
+		color: var(--accent);
+	}
+</style>

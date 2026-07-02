@@ -1,7 +1,9 @@
 ---
+import { Image } from 'astro:assets';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
+import photo from '../assets/akash.jpg';
 import { SITE_TITLE } from '../consts';
 ---
 
@@ -13,30 +15,36 @@ import { SITE_TITLE } from '../consts';
 	<body>
 		<Header />
 		<main>
-			<article class="prose">
-				<h1>About me</h1>
-				<p>
-					I'm Akash — a software engineer who enjoys building small, focused tools and shipping
-					them end to end. Over the years I've worked across the stack: web frontends and APIs,
-					native mobile apps, and command-line tools.
-				</p>
-				<p>
-					I like reading and tinkering with programming languages (Elixir, Ruby, JavaScript, Swift,
-					Lisp), editors (Emacs, Vim, VS Code), tools (Docker, Kubernetes), and frameworks (Angular,
-					React, SwiftUI, Phoenix). Away from the keyboard I'm usually doing <a
-						href="https://www.instagram.com/akshagrwl"
-						target="_blank"
-						rel="noopener">photography</a
-					>, playing video games, or reading sci-fi and fantasy.
-				</p>
-				<p>
-					This site is where I keep my writing and a few of the things I've built. You can find me
-					on <a href="https://github.com/akagr" target="_blank" rel="noopener">GitHub</a> and <a
-						href="https://twitter.com/akshagrwl"
-						target="_blank"
-						rel="noopener">Twitter/X</a
-					>.
-				</p>
+			<article class="about">
+				<div class="avatar">
+					<Image src={photo} alt="Akash Agrawal" width={120} height={120} />
+				</div>
+				<p class="eyebrow">About · Solutions Architect</p>
+				<h1>Akash Agrawal</h1>
+				<div class="prose">
+					<p>
+						I'm Akash — a solutions architect who has spent 15 years designing, building and
+						shipping software end to end. I've worked across the stack: distributed backends and
+						APIs, cloud platforms, web frontends, native mobile apps, and command-line tools.
+					</p>
+					<p>
+						I like reading and tinkering with programming languages (Elixir, Ruby, JavaScript,
+						Swift, Lisp), editors (Emacs, Vim, VS Code), tools (Docker, Kubernetes), and frameworks
+						(Angular, React, SwiftUI, Phoenix). Away from the keyboard I'm usually doing <a
+							href="https://www.instagram.com/akshagrwl"
+							target="_blank"
+							rel="noopener">photography</a
+						>, playing video games, or reading sci-fi and fantasy.
+					</p>
+					<p>
+						This site is where I keep my writing and a few of the things I've built. You can find me
+						on <a href="https://github.com/akagr" target="_blank" rel="noopener">GitHub</a> and <a
+							href="https://twitter.com/akshagrwl"
+							target="_blank"
+							rel="noopener">Twitter/X</a
+						>.
+					</p>
+				</div>
 			</article>
 		</main>
 		<Footer />
@@ -44,9 +52,30 @@ import { SITE_TITLE } from '../consts';
 </html>
 
 <style>
+	.about {
+		text-align: center;
+	}
+	.avatar {
+		width: 120px;
+		height: 120px;
+		margin: 0 auto 1.5rem;
+		border-radius: 50%;
+		overflow: hidden;
+		box-shadow: var(--shadow);
+		border: 4px solid var(--bg-raised);
+	}
+	.avatar :global(img) {
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+	.about h1 {
+		margin-bottom: 2rem;
+	}
 	.prose {
-		width: 720px;
-		max-width: calc(100% - 2em);
-		margin: auto;
+		text-align: left;
+		max-width: 34rem;
+		margin: 0 auto;
 	}
 </style>
